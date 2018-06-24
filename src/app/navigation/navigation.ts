@@ -2,31 +2,43 @@ import { FuseNavigation } from '@fuse/types';
 
 export const navigation: FuseNavigation[] = [
     {
-        id       : 'applications',
-        title    : 'Applications',
-        translate: 'NAV.APPLICATIONS',
-        type     : 'group',
-        children : [
+        id: 'applications',
+        title: 'Secciones',
+        type: 'group',
+        children: [
             {
-                id       : 'sample',
-                title    : 'Sample',
-                translate: 'NAV.SAMPLE.TITLE',
-                type     : 'item',
-                icon     : 'email',
-                url      : '/sample',
-                badge    : {
-                    title    : '25',
-                    translate: 'NAV.SAMPLE.BADGE',
-                    bg       : '#F44336',
-                    fg       : '#FFFFFF'
-                }
+                id: 'panel',
+                title: 'Panel',
+                type: 'item',
+                icon: 'view_quilt',
+                url: '/panel'
+                // badge    : {
+                //     title    : '25',
+                //     translate: 'NAV.SAMPLE.BADGE',
+                //     bg       : '#F44336',
+                //     fg       : '#FFFFFF'
+                // }
             },
             {
-                id       : 'tables',
-                title    : 'Tablas',
-                type     : 'item',
-                icon     : 'email',
-                url      : '/apps/file-manager',
+                id: 'chart',
+                title: 'Generar Gráficas',
+                type: 'item',
+                icon: 'bar_chart',
+                url: '/generator-chart'
+            },
+            {
+                id: 'chart-save',
+                title: 'Gráficas Guardadas',
+                type: 'item',
+                icon: 'save',
+                url: '/save-chart'
+            },
+            {
+                id: 'tables',
+                title: 'Tablas',
+                type: 'item',
+                icon: 'view_headline',
+                url: '/list-tables'
             }
         ]
     }

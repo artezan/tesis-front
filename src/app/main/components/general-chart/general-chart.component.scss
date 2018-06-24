@@ -1,0 +1,30 @@
+@import "src/@fuse/scss/fuse";
+.panel-margin {
+    margin: 3%
+}
+.mr-3 {
+    margin-right: 3%
+}
+.flexbox-chart {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 50%; 
+    justify-content: flex-end;
+    align-items: baseline;
+    align-content: center;
+    
+}
+.flexbox-chart > * {
+    margin: 1%
+}
+.panel-margin {
+    margin: 3%
+}
+.m5-chart {
+    margin-top: 5%;
+    margin-right: 5%;
+    /* margin-bottom: 5%; */
+    margin-left: 5%;
+
+}

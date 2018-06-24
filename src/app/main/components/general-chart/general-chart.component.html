@@ -1,0 +1,137 @@
+<div *ngIf="showdChart then data else noData ">
+</div>
+<ng-template #data>
+    <div *ngIf="isOneData || isOneDataSvc then oneData else multipleData"></div>
+    <ng-template #oneData>
+      <mat-card class="panel-margin">
+        <mat-card-header>
+            <div class="h2">
+                {{lineChartLabels[0]}}
+            </div>
+        
+        </mat-card-header>
+          <div class="pt-8 pb-32" fxLayout="column" fxLayoutAlign="center center">
+                <div class="light-blue-fg font-size-72 line-height-72">
+                    {{lineChartData[0].data[0]}}
+                </div>
+                <div class="h3 secondary-text font-weight-500">{{lineChartData[0].label}}
+                </div>
+            </div>
+            <div *ngIf="isGenerator" class="flexbox-chart">
+                    <button mat-raised-button color="accent" (click)="saveChart()">Guardar</button>
+                </div>
+      </mat-card>
+    </ng-template>
+    <ng-template #multipleData>
+        <div class="fuse-card auto-width panel-margin">
+
+            <div class="flexbox-chart"  >
+                <div class="mr-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Elementos a mostrar</mat-label>
+                        <input type="number" matInput placeholder="Ej: 20" (keyup)="filterByTop()" [(ngModel)]="numSort">
+                        <mat-icon matSuffix>sort</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="mr-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mostrar</mat-label>
+                        <mat-select [(ngModel)]="typeSort" (selectionChange)="filterByTop()">
+                            <mat-option value='top'>Mayores</mat-option>
+                            <mat-option value='bottom'>Menores</mat-option>
+                            <mat-option value='all'>Todos</mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>format_line_spacing</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="mr-3">
+                    <mat-form-field appearance="outline" class="mr-3">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select [(ngModel)]="lineChartType" (selectionChange)="changeChart()">
+                            <mat-option value='line'>Linea</mat-option>
+                            <mat-option value='bar'>Barras</mat-option>
+                            <mat-option value='doughnut'>Dona</mat-option>
+                            <mat-option value='pie'>Pastel</mat-option>
+                            <mat-option value='bubble'>Burbuja</mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>shuffle</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="mr-3">
+                    <mat-form-field appearance="outline" class="mr-3">
+                        <mat-label>Colores</mat-label>
+                        <mat-select value='one' #color (selectionChange)="colorsChart(color.value)">
+                            <mat-option value='one'>Uno</mat-option>
+                            <mat-option value='noOne'>Multiple</mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>shuffle</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="mr-3">
+                    <mat-slide-toggle [(ngModel)]="lineChartLegend">Etiquetas</mat-slide-toggle>
+                </div>
+            </div>
+            <div class="m5-chart" *ngIf="lineChartLabels.length > 1" >
+                    <canvas baseChart 
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType">
+                    
+                    </canvas>
+            </div>
+            <div class="simple-table-container" ms-responsive-table>
+                <div class=" table-title">
+                    Resumen
+                </div>
+            
+                <table class="simple">
+            
+                    <thead>
+                        <tr>
+                            <th>
+                                {{titleX}}
+                            </th>
+                            <th>
+                                {{lineChartData[0].label}}
+                            </th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                        <tr *ngFor="let rowLabel of lineChartLabels; index as i">
+                                <td *ngIf="i < 5">
+                                <span class="p-4">
+                                    {{rowLabel}}
+                                </span>
+                            </td>
+                            <td *ngIf="i < 5">
+                                <span class="p-4">
+                                    {{lineChartData[0].data[i]}}
+                                </span>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="isGenerator"  class="flexbox-chart">
+                <button mat-raised-button color="accent" (click)="saveChart()">Guardar</button>
+            </div>
+            
+        </div>
+        
+    </ng-template>
+
+
+</ng-template>
+<ng-template #noData>
+    <mat-card class="panel-margin">
+        <h2 style="padding: 5%">Ingresar Variables</h2>
+        <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+    </mat-card>
+
+
+</ng-template>

@@ -1,11 +1,16 @@
+import { API_URL } from './../../../../_config/api.url';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import {
+    ActivatedRouteSnapshot,
+    Resolve,
+    RouterStateSnapshot
+} from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
-export class FileManagerService implements Resolve<any>
-{
+export class FileManagerService implements Resolve<any> {
     onFilesChanged: BehaviorSubject<any>;
     onFileSelected: BehaviorSubject<any>;
 
@@ -14,10 +19,7 @@ export class FileManagerService implements Resolve<any>
      *
      * @param {HttpClient} _httpClient
      */
-    constructor(
-        private _httpClient: HttpClient
-    )
-    {
+    constructor(private _httpClient: HttpClient) {
         // Set the defaults
         this.onFilesChanged = new BehaviorSubject({});
         this.onFileSelected = new BehaviorSubject({});
@@ -30,18 +32,14 @@ export class FileManagerService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
-
-            Promise.all([
-                this.getFiles()
-            ]).then(
-                ([files]) => {
-                    resolve();
-                },
-                reject
-            );
+            Promise.all([this.getFiles()]).then(([files]) => {
+                resolve();
+            }, reject);
         });
     }
 
@@ -50,10 +48,11 @@ export class FileManagerService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getFiles(): Promise<any>
-    {
+    getFiles(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/file-manager')
+            this._httpClient
+                .get(API_URL.USERS_GET + 'cesar@correo.com')
+                .pipe(map((data: any) => data.data.tables))
                 .subscribe((response: any) => {
                     this.onFilesChanged.next(response);
                     this.onFileSelected.next(response[0]);
@@ -61,5 +60,4 @@ export class FileManagerService implements Resolve<any>
                 }, reject);
         });
     }
-
 }

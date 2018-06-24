@@ -1,0 +1,112 @@
+<div id="file-manager" class="page-layout simple right-sidebar inner-scroll">
+
+    <!-- CENTER -->
+    <div class="center" fxFlex>
+
+        <!-- HEADER -->
+        <div class="header  p-24" fxLayout="column" fxLayoutAlign="space-between start">
+
+            <!-- TOOLBAR -->
+            <div class="toolbar w-100-p" fxFlex fxLayout="row" fxLayoutAlign="space-between start">
+
+
+            </div>
+            <!-- / TOOLBAR -->
+
+            <!-- BREADCRUMB -->
+            <div class="breadcrumb  h1 pl-72" fxLayout="row" fxLayoutAlign="start center">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <span>Tablas en la Base de Datos</span>
+
+                </div>
+            </div>
+            <!-- / BREADCRUMB -->
+
+            <!-- ADD FILE BUTTON -->
+            <div class="file-uploader">
+                <input hidden type="file" (change)="detectFiles($event)" #fileInput/>
+                <button mat-fab class="add-file-button mat-warn" (click)="fileInput.click()" aria-label="Add file" [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <!-- / ADD FILE BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT -->
+        <div *ngIf="showLoader; then spinner else table "></div>
+        <ng-template #spinner>
+            <mat-spinner></mat-spinner>
+        </ng-template>
+        <ng-template #table>
+               <div class="content mat-white-bg" fusePerfectScrollbar>
+            <mat-table [dataSource]="dataSource " [@animateStagger]="{value:'50'}">
+
+                <!-- Type Column -->
+                <ng-container cdkColumnDef="icon">
+                    <mat-header-cell *cdkHeaderCellDef fxFlex="64px"></mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" fxFlex="64px">
+                        <mat-icon class="type-icon" [ngClass]="document"></mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container cdkColumnDef="name">
+                    <mat-header-cell *cdkHeaderCellDef>Nombre</mat-header-cell>
+                    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+                </ng-container>
+
+                <!-- Type Column -->
+                <ng-container cdkColumnDef="date">
+                    <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-md>Fecha</mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" fxHide fxShow.gt-md> {{row.date}}</mat-cell>
+                </ng-container>
+                <!-- enter-button Button Column -->
+                <ng-container cdkColumnDef="enter-button">
+                    <mat-header-cell *cdkHeaderCellDef fxFlex="48px"></mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" fxFlex="48px">
+                        <button mat-icon-button class="sidebar-toggle" (click)="onSelect(row.name)">
+                            <mat-icon class="secondary-text">assignment</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Detail Button Column -->
+                <ng-container cdkColumnDef="detail-button">
+                    <mat-header-cell *cdkHeaderCellDef fxFlex="48px"></mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" fxFlex="48px">
+                        <button mat-icon-button class="sidebar-toggle" (click)="openDetail(row.name)">
+                            <mat-icon class="secondary-text">info</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <!-- delete Button Column -->
+                <ng-container cdkColumnDef="delete-button">
+                    <mat-header-cell *cdkHeaderCellDef fxFlex="48px"></mat-header-cell>
+                    <mat-cell *cdkCellDef="let row" fxFlex="48px">
+                        <button mat-icon-button class="sidebar-toggle" (click)="deleteTable(row.name)">
+                            <mat-icon class="secondary-text">delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                 
+
+                <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: displayedColumns;" [@animate]="{value:'*',params:{y:'100%'}}"  >
+                </mat-row>
+
+            </mat-table>
+        </div> 
+        </ng-template>
+
+    
+        <!-- / CONTENT -->
+
+    </div>
+    <!-- / CENTER -->
+    <fuse-sidebar class="sidebar main-sidebar" name="app-side-table" position="right">
+            <app-side-table [data]="dataSumary" [name]="nameSumary"></app-side-table>
+        </fuse-sidebar>
+
+</div>

@@ -1,0 +1,94 @@
+<div id="dashboard-analytics" class="page-layout blank grey-100-bg">
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+    
+            <div class="hero-text">
+                <mat-icon class="hero-icon">show_chart</mat-icon>
+                <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Generador de Gráficas
+                </h1>
+                <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Visualizar Datos
+    
+                </h3>
+            </div>
+    
+        </div>
+        <!-- / HEADER -->
+    <!-- Panel -->
+    <div class="panel-margin">
+        <mat-card>
+            <mat-card-header>
+                <p>
+                    Variables:
+                </p>
+            </mat-card-header>
+            <!-- <div>
+            <mat-chip-list>
+      
+              <mat-chip color="primary" *ngIf="apartmentSelect" class="chips-font" selected="true" (removed)="remove('apartmentSelect')"
+                [removable]="removable">
+                Depa:{{apartmentSelect.Interior}}
+                <mat-icon matChipRemove *ngIf="removable">
+                  cancel
+                </mat-icon>
+              </mat-chip>
+              <mat-chip color="accent" *ngIf="state" class="chips-font" selected="true" (removed)="remove('state')" [removable]="removable">
+                Estado:{{state}}
+                <mat-icon matChipRemove *ngIf="removable">
+                  cancel
+                </mat-icon>
+              </mat-chip>
+              <mat-chip color="primary" *ngIf="monthInput" class="chips-font" selected="true" (removed)="remove('monthInput')" [removable]="removable">
+                Mes:{{monthInput.label}}
+                <mat-icon matChipRemove *ngIf="removable">
+                  cancel
+                </mat-icon>
+              </mat-chip>
+              <mat-chip color="accent" *ngIf="yearInput" class="chips-font" selected="true" (removed)="remove('yearInput')" [removable]="removable">
+                Año:{{yearInput}}
+                <mat-icon matChipRemove *ngIf="removable">
+                  cancel
+                </mat-icon>
+              </mat-chip>
+              <mat-chip *ngIf="!yearInput && !monthInput && !apartmentSelect && !state " class="chips-font" selected="false">
+                Ningun filtro seleccionado
+              </mat-chip>
+            </mat-chip-list>
+          </div> -->
+            <div class="flexbox-panel">
+                <div>
+                    <!-- Y -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Eje Y</mat-label>
+                        <mat-select placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="optionY" #yValue (selectionChange)="setfilters()">
+                            <mat-option *ngFor="let y of optionNumeric" [value]="y">{{y}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <!-- X -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Eje X</mat-label>
+                        <mat-select placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="optionX" #xValue (selectionChange)="setfilters()">
+                            <mat-option *ngFor="let x of optionString" [value]="x">{{x}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+
+        </mat-card>
+    </div>
+    <div class=" font-size-18 font-weight-300 panel-margin">
+        Datos Graficados
+    </div>
+    <app-general-chart title='' 
+    [lineChartData]="lineChartData" 
+    [lineChartLabels]="lineChartLabels" 
+    [showdChart]="showdChart"
+    [titleX]="optionX"
+    ></app-general-chart>
+
+</div>

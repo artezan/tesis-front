@@ -58,7 +58,9 @@
     "prismjs": "1.14.0",
     "rxjs": "6.2.1",
     "rxjs-compat": "6.2.1",
+    "simple-statistics": "6.1.0",
     "web-animations-js": "2.3.1",
+    "xlsx": "^0.13.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {

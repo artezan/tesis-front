@@ -1,3 +1,4 @@
+import { UserSessionService } from './../../../services/user-session.service';
 import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -36,7 +37,8 @@ export class NavbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
-        private _router: Router
+        private _router: Router,
+        public _userSessionService: UserSessionService
     )
     {
         // Set the defaults
@@ -44,6 +46,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+        // set table select
     }
 
     // -----------------------------------------------------------------------------------------------------

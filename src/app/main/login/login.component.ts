@@ -1,3 +1,4 @@
+import { UserSessionService } from './../../services/user-session.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -5,16 +6,15 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
-    selector   : 'login',
+    selector: 'login',
     templateUrl: './login.component.html',
-    styleUrls  : ['./login.component.scss'],
-    animations : fuseAnimations
+    styleUrls: ['./login.component.scss'],
+    animations: fuseAnimations
 })
-export class LoginComponent implements OnInit, OnDestroy
-{
+export class LoginComponent implements OnInit, OnDestroy {
     loginForm: FormGroup;
     loginFormErrors: any;
 
@@ -31,18 +31,18 @@ export class LoginComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         private router: Router,
-    )
-    {
+        private userSessionService: UserSessionService
+    ) {
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
-                navbar : {
+                navbar: {
                     hidden: true
                 },
                 toolbar: {
                     hidden: true
                 },
-                footer : {
+                footer: {
                     hidden: true
                 }
             }
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy
 
         // Set the defaults
         this.loginFormErrors = {
-            email   : {},
+            email: {},
             password: {}
         };
 
@@ -65,10 +65,9 @@ export class LoginComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.loginForm = this._formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
 
@@ -82,8 +81,7 @@ export class LoginComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -96,12 +94,9 @@ export class LoginComponent implements OnInit, OnDestroy
     /**
      * On form values changed
      */
-    onLoginFormValuesChanged(): void
-    {
-        for ( const field in this.loginFormErrors )
-        {
-            if ( !this.loginFormErrors.hasOwnProperty(field) )
-            {
+    onLoginFormValuesChanged(): void {
+        for (const field in this.loginFormErrors) {
+            if (!this.loginFormErrors.hasOwnProperty(field)) {
                 continue;
             }
 
@@ -111,13 +106,19 @@ export class LoginComponent implements OnInit, OnDestroy
             // Get the control
             const control = this.loginForm.get(field);
 
-            if ( control && control.dirty && !control.valid )
-            {
+            if (control && control.dirty && !control.valid) {
                 this.loginFormErrors[field] = control.errors;
             }
         }
     }
     loginToStart(): void {
-        this.router.navigate(['apps/file-manager']);
+        const email: NavigationExtras = {
+            queryParams: {email: this.loginForm.get('email').value}
+          };
+    
+        // this.userSessionService.getUser(email).subscribe(res => {
+        //     console.log(res);
+        // });
+         this.router.navigate(['list-tables'], email);
     }
 }

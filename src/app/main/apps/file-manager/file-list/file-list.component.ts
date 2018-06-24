@@ -7,19 +7,24 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FileManagerService } from 'app/main/apps/file-manager/file-manager.service';
 
-
 @Component({
-    selector   : 'file-list',
+    selector: 'file-list',
     templateUrl: './file-list.component.html',
-    styleUrls  : ['./file-list.component.scss'],
-    animations : fuseAnimations
+    styleUrls: ['./file-list.component.scss'],
+    animations: fuseAnimations
 })
-export class FileManagerFileListComponent implements OnInit, OnDestroy
-{
+export class FileManagerFileListComponent implements OnInit, OnDestroy {
     files: any;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['icon', 'name', 'type', 'owner', 'size', 'modified', 'detail-button'];
+    displayedColumns = [
+        'icon',
+        'name',
+        'date',
+        'detail-button',
+        'delete-button'
+    ];
     selected: any;
+    document = 'spreadsheet';
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -33,8 +38,7 @@ export class FileManagerFileListComponent implements OnInit, OnDestroy
     constructor(
         private _fileManagerService: FileManagerService,
         private _fuseSidebarService: FuseSidebarService
-    )
-    {
+    ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -46,8 +50,7 @@ export class FileManagerFileListComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.dataSource = new FilesDataSource(this._fileManagerService);
 
         this._fileManagerService.onFilesChanged
@@ -66,8 +69,7 @@ export class FileManagerFileListComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -82,8 +84,7 @@ export class FileManagerFileListComponent implements OnInit, OnDestroy
      *
      * @param selected
      */
-    onSelect(selected): void
-    {
+    onSelect(selected): void {
         this._fileManagerService.onFileSelected.next(selected);
     }
 
@@ -92,23 +93,18 @@ export class FileManagerFileListComponent implements OnInit, OnDestroy
      *
      * @param name
      */
-    toggleSidebar(name): void
-    {
+    toggleSidebar(name): void {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
     }
 }
 
-export class FilesDataSource extends DataSource<any>
-{
+export class FilesDataSource extends DataSource<any> {
     /**
      * Constructor
      *
      * @param {FileManagerService} _fileManagerService
      */
-    constructor(
-        private _fileManagerService: FileManagerService
-    )
-    {
+    constructor(private _fileManagerService: FileManagerService) {
         super();
     }
 
@@ -117,15 +113,12 @@ export class FilesDataSource extends DataSource<any>
      *
      * @returns {Observable<any[]>}
      */
-    connect(): Observable<any[]>
-    {
+    connect(): Observable<any[]> {
         return this._fileManagerService.onFilesChanged;
     }
 
     /**
      * Disconnect
      */
-    disconnect(): void
-    {
-    }
+    disconnect(): void {}
 }

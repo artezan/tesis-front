@@ -1,0 +1,61 @@
+<!-- SIDEBAR HEADER -->
+<div class="header p-24" fxLayout="column" fxLayoutAlign="space-between">
+
+    <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon secondary-text s-36 mr-16">assignment</mat-icon>
+        <span class="logo-text h1">{{name}}</span>
+    </div>
+
+</div>
+<!-- / SIDEBAR HEADER -->
+
+<!-- SIDEBAR CONTENT -->
+<mat-progress-bar color="accent" mode="indeterminate" *ngIf="!data || showLoader"></mat-progress-bar>
+<div *ngIf="data " class="content py-16" fusePerfectScrollbar>
+
+    <div class="nav">
+
+        <div class="nav-item" aria-label="starred">
+            <a class="nav-link" matRipple>
+                <mat-chip-list>
+                    <mat-chip color="accent" class="mr-16" selected="true">{{data.arrSize}}</mat-chip>
+                </mat-chip-list>
+                <div class="title"> Número de elementos </div>
+
+            </a>
+        </div>
+
+        <div class="nav-item" aria-label="starred">
+            <a class="nav-link" matRipple>
+                <mat-chip-list>
+                    <mat-chip color="accent" class="mr-16" selected="true">{{data.objSize}}</mat-chip>
+                </mat-chip-list>
+                <div class="title"> Número de columnas por elemento </div>
+
+            </a>
+        </div>
+
+        <div class="nav-item" aria-label="starred">
+            <a class="nav-link" matRipple>
+                <mat-chip-list>
+                    <mat-chip color="accent" class="mr-16" selected="true">{{data.numNumber}}</mat-chip>
+                </mat-chip-list>
+                <div class="title"> Elementos de tipo numérico </div>
+
+            </a>
+        </div>
+
+        <div class="nav-item" aria-label="starred">
+            <a class="nav-link" matRipple>
+                <mat-chip-list>
+                    <mat-chip color="accent" class="mr-16" selected="true">{{data.numString}}</mat-chip>
+                </mat-chip-list>
+                <div class="title"> Elementos de tipo caracter
+                </div>
+
+            </a>
+        </div>
+
+    </div>
+
+    <!-- / SIDEBAR CONTENT -->
