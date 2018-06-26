@@ -20,6 +20,13 @@ export const navigation: FuseNavigation[] = [
                 // }
             },
             {
+                id: 'regression',
+                title: 'Estimaciones',
+                type: 'item',
+                icon: 'timeline',
+                url: '/regression'
+            },
+            {
                 id: 'chart',
                 title: 'Generar Gráficas',
                 type: 'item',
@@ -32,6 +39,13 @@ export const navigation: FuseNavigation[] = [
                 type: 'item',
                 icon: 'save',
                 url: '/save-chart'
+            },
+            {
+                id: 'tables',
+                title: 'TensorFlow',
+                type: 'item',
+                icon: 'view_headline',
+                url: '/ts-test'
             },
             {
                 id: 'tables',

@@ -1,0 +1,26 @@
+<div id="ts-test" class="page-layout blank grey-100-bg">
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+    
+            <div class="hero-text">
+                <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Estimaciones
+                </h1>
+                <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Regresion Lineal
+    
+                </h3>
+            </div>
+    
+        </div>
+        <!-- / HEADER -->
+<h3>Ejemplo: ecribir un numero</h3>
+<div class="wrapper">
+    <canvas drawable (newImage)="predict($event)"></canvas><br>
+</div>
+
+<button mat-raised-button color="primary"  (click)="canvas.clear()">Borrar</button>
+<div class="m5-chart" >
+    <chart [data]="predictions"></chart>
+</div>
+</div>

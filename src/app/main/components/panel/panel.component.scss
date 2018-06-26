@@ -121,8 +121,9 @@
                         min-height: 64px !important;
                         max-height: 64px !important;
 
-                        &.web-bg {
+                        &.string-colum {
                             background: mat-color($mat-blue, 500);
+                            color: white
                         }
 
                         &.android-bg {
@@ -133,8 +134,10 @@
                             background: mat-color($mat-amber, 800);
                         }
 
-                        &.cloud-bg {
+                        &.number-colum {
                             background: mat-color($mat-blue-grey, 500);
+                            color: white
+
                         }
 
                         .category {

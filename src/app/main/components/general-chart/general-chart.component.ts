@@ -10,7 +10,10 @@ import {
     EventEmitter
 } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { UserChartSettings, UserSessionService } from '../../../services/user-session.service';
+import {
+    UserChartSettings,
+    UserSessionService
+} from '../../../services/user-session.service';
 
 @Component({
     selector: 'app-general-chart',
@@ -61,13 +64,28 @@ export class GeneralChartComponent implements OnInit, OnChanges {
     @Input() isGenerator = true;
     realData;
     realLabel;
-    isOneData: boolean ;
-    @Input() isOneDataSvc ;
+    isOneData: boolean;
+    @Input() isOneDataSvc;
+    // RL
+    @Input() isRegression = false;
+    @Input()
+    statisticsData: {
+        variance: number;
+        standardDeviation: number;
+        sampleCorrelation: number;
+        rSquared: number;
+        error: number;
+    };
+    estimateY: Array<{ x: number; y: number }>;
 
-    constructor(public controllerChart: ChartControllerService, private userSessionService: UserSessionService) {}
+    constructor(
+        public controllerChart: ChartControllerService,
+        private userSessionService: UserSessionService
+    ) {}
 
     ngOnInit(): void {}
     ngOnChanges(changes: SimpleChanges): void {
+
         if (changes.lineChartData) {
             if (changes.lineChartData.currentValue) {
                 this.lineChartData = changes.lineChartData.currentValue;
@@ -80,12 +98,15 @@ export class GeneralChartComponent implements OnInit, OnChanges {
                 this.realLabel = this.lineChartLabels;
             }
         }
-        if (this.lineChartData.length && this.lineChartData[0].data.length === 1) {
+        if (
+            this.lineChartData.length &&
+            this.lineChartData[0].data.length === 1
+        ) {
             this.isOneData = true;
         } else {
             this.isOneData = false;
         }
-        console.log(this.isOneData)
+        this.getRegressionArray();
     }
     filterByTop(): void {
         const arrToSort = [];
@@ -163,28 +184,28 @@ export class GeneralChartComponent implements OnInit, OnChanges {
         }
     }
     colorsChart(value): void {
-       if (value === 'one') {
-        this.lineChartColors = [
-            {
-                backgroundColor: 'rgba(66,165,245, .5)',
-                borderColor: 'rgba(66,165,245, 1)',
-                borderCapStyle: 'round',
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: '#2196F3',
-                pointBackgroundColor: '#2196F3',
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: 'rgba(66,165,245, .5)',
-                pointHoverBorderColor: 'rgba(66,165,245,1)',
-                pointHoverBorderWidth: 2,
-                pointRadius: 4,
-                pointHitRadius: 10
-            }
-        ];
-       } else {
-           this.lineChartColors = undefined;
-       }
+        if (value === 'one') {
+            this.lineChartColors = [
+                {
+                    backgroundColor: 'rgba(66,165,245, .5)',
+                    borderColor: 'rgba(66,165,245, 1)',
+                    borderCapStyle: 'round',
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: '#2196F3',
+                    pointBackgroundColor: '#2196F3',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(66,165,245, .5)',
+                    pointHoverBorderColor: 'rgba(66,165,245,1)',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHitRadius: 10
+                }
+            ];
+        } else {
+            this.lineChartColors = undefined;
+        }
     }
     saveChart(): void {
         const dataChart: UserChartSettings = {
@@ -200,6 +221,17 @@ export class GeneralChartComponent implements OnInit, OnChanges {
             isOneData: this.isOneData
         };
         this.userSessionService.saveChartUser(dataChart);
-
-    } 
+    }
+    getRegressionArray(): void {
+        if (this.isRegression && this.showdChart) {
+            const arrEstimateY = [];
+            this.lineChartData[0].data.forEach((xy, i) => {
+                const x: any = xy;
+                arrEstimateY[i] = this.lineChartData[1].data.find(
+                    (item: any) => item.x === x.x
+                );
+            });
+            this.estimateY = arrEstimateY;
+        }
+    }
 }

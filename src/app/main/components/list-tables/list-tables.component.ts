@@ -122,6 +122,7 @@ export class ListTablesComponent implements OnInit {
         const result = [];
         const headers = lines[0].split(',');
 
+
         for (let i = 1; i < lines.length; i++) {
             const obj = {};
 
@@ -167,8 +168,9 @@ export class ListTablesComponent implements OnInit {
                     if (value[value.length - 1] === '"') {
                         value = value.substr(0, value.length - 1);
                     }
-
+                    
                     const key = headers[queryIdx++];
+                    
                     obj[key.trim()] = value;
                     startValueIdx = idx + 1;
                 }

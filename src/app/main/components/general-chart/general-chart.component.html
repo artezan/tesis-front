@@ -82,41 +82,103 @@
                     
                     </canvas>
             </div>
-            <div class="simple-table-container" ms-responsive-table>
-                <div class=" table-title">
-                    Resumen
-                </div>
-            
-                <table class="simple">
-            
-                    <thead>
-                        <tr>
-                            <th>
-                                {{titleX}}
-                            </th>
-                            <th>
-                                {{lineChartData[0].label}}
-                            </th>
-                        </tr>
-                    </thead>
-            
-                    <tbody>
-                        <tr *ngFor="let rowLabel of lineChartLabels; index as i">
+            <div *ngIf="isRegression then regression else normalData" ></div>
+            <ng-template #normalData>
+                <div class="simple-table-container" ms-responsive-table>
+                    <div class=" table-title">
+                        Resumen
+                    </div>
+                
+                    <table class="simple">
+                
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{titleX}}
+                                </th>
+                                <th>
+                                    {{lineChartData[0].label}}
+                                </th>
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            <tr *ngFor="let rowLabel of lineChartLabels; index as i">
+                                    <td *ngIf="i < 5">
+                                    <span class="p-4">
+                                        {{rowLabel}}
+                                    </span>
+                                </td>
                                 <td *ngIf="i < 5">
-                                <span class="p-4">
-                                    {{rowLabel}}
-                                </span>
-                            </td>
-                            <td *ngIf="i < 5">
-                                <span class="p-4">
-                                    {{lineChartData[0].data[i]}}
-                                </span>
-                            </td>
-                            
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                    <span class="p-4">
+                                        {{lineChartData[0].data[i]}}
+                                    </span>
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
+            <ng-template #regression>
+                <div class="simple-table-container" ms-responsive-table>
+                    <div class=" table-title">
+                        Datos de Tendencia
+                    </div>
+                
+                    <table class="simple">
+                
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{titleX}}
+                                </th>
+                                <th>
+                                    {{lineChartData[0].label}}
+                                </th>
+                                <th>
+                                    Estimación
+                                </th>
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            <tr *ngFor="let realXY of lineChartData[0].data; index as i">
+                                    <td>
+                                    <span class="p-4">
+                                        {{realXY.x}}
+                                    </span>
+                                </td>
+                                <td >
+                                    <span class="p-4">
+                                        {{realXY.y}}
+                                    </span>
+                                </td>
+                                <td >
+                                    <span class="p-4">
+                                        {{estimateY[i].y}}
+                                    </span>
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <mat-list>
+                    <mat-list-item>
+                      <h3 matLine> <b>R^2:</b> {{statisticsData.rSquared.toFixed(2)}} </h3>
+                      <mat-divider></mat-divider>
+                      <p matLine> <b>Error típico </b> {{statisticsData.error.toFixed(2)}} </p>
+                      <mat-divider></mat-divider>
+                      <p matLine> <b>Correlacion</b> {{statisticsData.sampleCorrelation.toFixed(2)}} </p>
+                      <mat-divider></mat-divider>
+                      <p matLine > <b>Desviacion Estandar</b> {{statisticsData.standardDeviation.toFixed(2)}} </p>
+                      <mat-divider></mat-divider>
+                      <p matLine > <b>Varianza</b> {{statisticsData.variance.toFixed(2)}} </p>
+                    </mat-list-item>
+                  </mat-list>
+            </ng-template>
+            
             <div *ngIf="isGenerator"  class="flexbox-chart">
                 <button mat-raised-button color="accent" (click)="saveChart()">Guardar</button>
             </div>

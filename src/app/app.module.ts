@@ -17,7 +17,8 @@ import {
     MatChipsModule,
     MatInputModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDividerModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
@@ -42,6 +43,9 @@ import { StaticsComponent } from './main/components/statics/statics.component';
 import { ChartsModule } from 'ng2-charts';
 import { ChartSaveComponent } from './main/components/chart-save/chart-save.component';
 import { EstimateComponent } from './main/components/estimate/estimate.component';
+import { DrawableDirective } from './main/directives/drawable.directive';
+import { ChartComponent } from './main/components/chart-number/chart.component';
+import { TsTestComponent } from './main/components/ts-test/ts-test.component';
 
 const appRoutes: Routes = [
     { path: 'list-tables', component: ListTablesComponent },
@@ -49,6 +53,8 @@ const appRoutes: Routes = [
     { path: 'stat', component: StaticsComponent },
     { path: 'generator-chart', component: GeneratorChartComponent },
     { path: 'save-chart', component: ChartSaveComponent },
+    { path: 'regression', component: EstimateComponent },
+    { path: 'ts-test', component: TsTestComponent },
     {
         path: 'apps',
         loadChildren: './main/apps/apps.module#AppsModule'
@@ -70,7 +76,11 @@ const appRoutes: Routes = [
         StaticsComponent,
         GeneratorChartComponent,
         ChartSaveComponent,
-        EstimateComponent
+        EstimateComponent,
+        DrawableDirective,
+        ChartComponent,
+        TsTestComponent
+        
     ],
     imports: [
         BrowserModule,
@@ -106,6 +116,7 @@ const appRoutes: Routes = [
         MatInputModule,
         MatCardModule,
         MatSelectModule,
+        MatDividerModule,
 
         // App modules
         LayoutModule,

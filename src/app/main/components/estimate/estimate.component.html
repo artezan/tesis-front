@@ -1,3 +1,71 @@
-<p>
-  estimate works!
-</p>
+<div id="regression" class="page-layout blank grey-100-bg">
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+    
+            <div class="hero-text">
+                <mat-icon class="hero-icon">timeline</mat-icon>
+                <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Estimaciones
+                </h1>
+                <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Regresion Lineal
+    
+                </h3>
+            </div>
+    
+        </div>
+        <!-- / HEADER -->
+    <!-- Panel -->
+    <div class="panel-margin">
+        <mat-card  [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-card-header>
+       
+
+                <p>
+                    Variables Numéricas : 
+                </p>
+            </mat-card-header>
+            <div class="flexbox-panel">
+                <div>
+                    <!-- Y -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Variable Dependiente Y</mat-label>
+                        <mat-select placeholder=" Seleccione Columna Numérica" aria-label="State" [(ngModel)]="optionY" #yValue (selectionChange)="setfilters()">
+                            <mat-option *ngFor="let y of selectY" [value]="y">{{y}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <!-- X -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Variable Independiente X</mat-label>
+                        <mat-select placeholder=" Seleccione Columna Numérica" aria-label="State" [(ngModel)]="optionX" #xValue (selectionChange)="setfilters()">
+                            <mat-option *ngFor="let x of selectX" [value]="x">{{x}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+
+        </mat-card>
+    </div>
+      <!-- <input type="number" (change)="linearPrediction($event.target.value)" >  -->
+    <div class=" font-size-18 font-weight-300 panel-margin">
+        Datos Graficados
+    </div>
+    <div [@animate]="{value:'*',params:{y:'100%'}}">
+        <app-general-chart  title='' 
+    [lineChartData]="lineChartData" 
+    [lineChartLabels]="lineChartLabels" 
+    [showdChart]="showChart"
+    [titleX]="optionX"
+    [lineChartOptions]="options"
+    [lineChartColors]="lineChartColors"
+     lineChartType="line"
+     [isRegression]=true
+     [statisticsData]="statisticsData"
+    ></app-general-chart> 
+    </div>
+
+</div>
