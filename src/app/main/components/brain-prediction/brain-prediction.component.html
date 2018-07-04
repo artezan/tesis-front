@@ -29,7 +29,7 @@
                     <!-- Inputs -->
                     <mat-form-field appearance="fill">
                         <mat-label>Datos de Entrada</mat-label>
-                        <mat-select multiple placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="input" #yValue (selectionChange)="setfilters(yValue.value)">
+                        <mat-select multiple placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="input" #yValue (selectionChange)="setfilters()">
                             <mat-option *ngFor="let option of inputOptions" [value]="option">{{option}}</mat-option>
                         </mat-select>
                     </mat-form-field>

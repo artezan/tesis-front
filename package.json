@@ -15,7 +15,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json",
-    "build:artezan": "ng build --prod --base-href /tesis/"
+    "build:artezan": "ng build --prod --base-href https://theartezan.xyz/tesis/"
   },
   "private": true,
   "dependencies": {
