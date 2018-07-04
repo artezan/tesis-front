@@ -1,0 +1,92 @@
+<div class="wrapper">
+</div>
+<div class="page-layout simple left-sidebar inner-sidebar">
+
+    <!-- HEADER -->
+    <div class="header bgr p-24" fxLayout="row" fxLayoutAlign="start center">
+
+        <button mat-icon-button class="sidebar-toggle mr-8" fxHide.gt-md (click)="toggleSidebar('simple-left-sidebar-3')">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <div>
+            <h2>Datos Geográficos</h2>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+
+    <div *ngIf="optionSelected && hasLatLng ; then mapTemplate; else optionsTemplate"></div>
+    <ng-template #mapTemplate>
+            <h3 style="margin-left: 3%;">{{optionSelected}}</h3>
+
+        <!-- CONTENT -->
+        <div class="content map">
+
+            <!-- SIDEBAR -->
+            <div class="parent20">
+                <!-- <app-list-gps   [items]="arrColumn" ></app-list-gps> -->
+                <div class="child20">
+                    <ul *ngFor="let item of markers">
+                        <li (click)="slectMarker(item)">
+                            <p matline>{{item.nameColumn}}</p>
+                            <mat-divider></mat-divider>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- / SIDEBAR -->
+
+            <!-- CENTER -->
+            <div class="center p-24  map ">
+
+                <!-- CONTENT -->
+                <div class="content mat-elevation-z4 mat-white-bg  map ">
+                    <app-general-maps></app-general-maps>
+
+                </div>
+                <!-- / CONTENT -->
+
+            </div>
+            <!-- / CENTER -->
+
+
+
+
+        </div>
+        <!-- / CONTENT -->
+    </ng-template>
+    <ng-template #optionsTemplate>
+        <div class="panel-margin">
+
+            <mat-card>
+                <mat-card-header>
+                    <p>
+                        Nombre de los lugares
+                    </p>
+                </mat-card-header>
+
+                <div class="flexbox-panel">
+                    <div>
+                        <!-- Column -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Columna a Mostrar</mat-label>
+                            <mat-select placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="optionSelected" #yValue (selectionChange)="getData()">
+                                <mat-option *ngFor="let y of options" [value]="y">{{y}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+
+            </mat-card>
+        </div>
+
+    </ng-template>
+
+
+
+</div>

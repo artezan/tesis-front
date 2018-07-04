@@ -44,13 +44,25 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div>
+                    <!-- Estimar X -->
+                    <mat-form-field *ngIf="optionX" appearance="outline">
+                        <mat-label>Ingrese valor de X a predcecir</mat-label>
+                        <input type="number" matInput placeholder="" #predictX  (keyup)="getRegression(predictX.value)">
+                      </mat-form-field>
+                </div>
+                <div>
+                    <mat-chip-list *ngIf="resultRegression">
+                        <mat-chip color="accent" selected="true">{{resultRegression}}</mat-chip>
+                      </mat-chip-list>
+                </div>
 
             </div>
 
 
         </mat-card>
     </div>
-      <!-- <input type="number" (change)="linearPrediction($event.target.value)" >  -->
+     
     <div class=" font-size-18 font-weight-300 panel-margin">
         Datos Graficados
     </div>

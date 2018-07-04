@@ -1,0 +1,98 @@
+<div id="brain-prediction" class="page-layout simple">
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+
+        <div class="hero-text">
+            <mat-icon class="hero-icon">insert_chart_outlined</mat-icon>
+            <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                Red Neuronal
+            </h1>
+            <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                Predicciones
+            </h3>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+        <mat-card>
+            <mat-card-header>
+                <p>
+                    Campos a predecir:
+                </p>
+            </mat-card-header>
+
+            <div class="row-brain">
+                <div class="col-brain">
+                    <!-- Inputs -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Datos de Entrada</mat-label>
+                        <mat-select multiple placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="input" #yValue (selectionChange)="setfilters(yValue.value)">
+                            <mat-option *ngFor="let option of inputOptions" [value]="option">{{option}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-brain">
+                    <!-- Outputs -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Datos de salida</mat-label>
+                        <mat-select placeholder=" Seleccione Columna" aria-label="State" [(ngModel)]="output" #xValue >
+                            <mat-option *ngFor="let option of inputOptions" [value]="option">{{option}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+
+        </mat-card>
+        <br>
+        <mat-card>
+            <mat-card-header>
+                <mat-progress-bar color="accent" mode="indeterminate" *ngIf="loader"></mat-progress-bar>
+                <p *ngIf="!loader">
+                    Datos a predecir:
+                </p>
+            </mat-card-header>
+            <div class="row-brain">
+                <div class="col-brain">
+                    <div class="row-brain" *ngFor="let item of input; index as i">
+                        <div>
+                            <!-- datos a ingresar -->
+                            <mat-form-field *ngIf="!isString">
+                                <mat-label>{{item}}</mat-label>
+                                <input [(ngModel)]="question[i]" matInput placeholder="">
+                            </mat-form-field>
+                            <mat-form-field *ngIf="isString">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select  placeholder=" Seleccione Dato" aria-label="State" [(ngModel)]="question[i]">
+                                    <mat-option *ngFor="let option of optionString[i]" [value]="option">{{option}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div lass="col-brain">
+                    <div class="row-brain">
+                        <h2 *ngIf="prediction">Resultado: </h2>
+                    </div>
+                    <div class="row-brain border-result ">
+                        <h1 *ngIf="prediction">{{prediction}}</h1>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="flexbox-button">
+                <button mat-raised-button color="accent" [disabled]="!input" (click)="sendData()">Predecir</button>
+            </div>
+
+
+        </mat-card>
+    </div>
+    <!-- / CONTENT -->
+
+</div>

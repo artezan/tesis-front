@@ -15,6 +15,7 @@
         </div>
         <!-- / HEADER -->
 <h3>Ejemplo: ecribir un numero</h3>
+ <input type="number" (change)="linearPrediction($event.target.value)" > 
 <div class="wrapper">
     <canvas drawable (newImage)="predict($event)"></canvas><br>
 </div>

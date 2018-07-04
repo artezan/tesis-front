@@ -1,0 +1,25 @@
+<div style="display: block !important; width: 100%; ">
+   <ngx-datatable
+*ngIf="rows"
+[rows]="rows"
+[columnMode]="'force'"
+[headerHeight]="70"
+[footerHeight]="50"
+[scrollbarH]="true"
+(inputChange)="change($event)"
+[loadingIndicator]="loadingIndicator"
+[columns]="columns"
+class="material data-table colum-size sort-hide data-header table input-responsive flexc"
+[rowHeight]="50"
+[scrollbarV]="true"
+>
+
+</ngx-datatable>
+<!-- 
+    [selected]="selected"
+[displayCheck]="displayCheck"
+ [selectionType]="selectionType"
+ (select)='onSelect($event)'
+ -->
+ 
+</div>

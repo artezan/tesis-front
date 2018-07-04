@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { ChartControllerService } from './chart-controller.service';
 import {
     Component,
@@ -76,6 +77,7 @@ export class GeneralChartComponent implements OnInit, OnChanges {
         rSquared: number;
         error: number;
     };
+    @Input() refreshData: { arrXY: any[]; arrStr: any[] };
     estimateY: Array<{ x: number; y: number }>;
 
     constructor(
@@ -85,7 +87,6 @@ export class GeneralChartComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {}
     ngOnChanges(changes: SimpleChanges): void {
-
         if (changes.lineChartData) {
             if (changes.lineChartData.currentValue) {
                 this.lineChartData = changes.lineChartData.currentValue;
@@ -106,6 +107,16 @@ export class GeneralChartComponent implements OnInit, OnChanges {
         } else {
             this.isOneData = false;
         }
+        if (changes.refreshData) {
+            if (changes.refreshData.currentValue) {
+                this.refreshData = changes.refreshData.currentValue;
+                this.remakeChart2(
+                    this.refreshData.arrXY,
+                    this.refreshData.arrStr
+                );
+            }
+        }
+
         this.getRegressionArray();
     }
     filterByTop(): void {
@@ -175,6 +186,14 @@ export class GeneralChartComponent implements OnInit, OnChanges {
         this.lineChartData = clone;
         setTimeout(() => (this.lineChartLabels = clone2), 0);
     }
+    private remakeChart2(arrXY: any[], arrStr: any[]): void {
+        let clone = JSON.parse(JSON.stringify(this.lineChartData));
+        let clone2 = JSON.parse(JSON.stringify(this.lineChartLabels));
+        clone[0].data = arrXY;
+        clone2 = arrStr;
+        this.lineChartData = clone;
+        setTimeout(() => (this.lineChartLabels = clone2), 0);
+    }
 
     changeChart(): void {
         if (this.lineChartType === 'doughnut' || this.lineChartType === 'pie') {
@@ -233,5 +252,9 @@ export class GeneralChartComponent implements OnInit, OnChanges {
             });
             this.estimateY = arrEstimateY;
         }
+    }
+    // helper
+    isNumber(val): boolean {
+        return typeof val === 'number';
     }
 }

@@ -117,6 +117,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    align-items: baseline;
     
 }
 .flexbox-panel > * {
@@ -124,18 +125,4 @@
 }
 .panel-margin {
     margin: 3%
-}
-.wrapper {
-    display: inline-flex;
-    justify-content: flex-end;
-    border: 10px solid lighten(#03A9F4, 15%);
-    transition: border-color .2s ease-in;
-    &:hover {
-        border: 10px solid #03A9F4;
-        transition: border-color .2s ease-in;
-    }
-}
-
-canvas {
-    cursor: crosshair;
 }

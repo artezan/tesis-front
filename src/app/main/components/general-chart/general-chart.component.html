@@ -25,7 +25,7 @@
     <ng-template #multipleData>
         <div class="fuse-card auto-width panel-margin">
 
-            <div class="flexbox-chart"  >
+            <div class="flexbox-chart" *ngIf="isGenerator" >
                 <div class="mr-3">
                     <mat-form-field appearance="outline">
                         <mat-label>Elementos a mostrar</mat-label>
@@ -83,7 +83,7 @@
                     </canvas>
             </div>
             <div *ngIf="isRegression then regression else normalData" ></div>
-            <ng-template #normalData>
+            <ng-template  #normalData>
                 <div class="simple-table-container" ms-responsive-table>
                     <div class=" table-title">
                         Resumen
@@ -110,8 +110,11 @@
                                     </span>
                                 </td>
                                 <td *ngIf="i < 5">
-                                    <span class="p-4">
+                                    <span *ngIf="isNumber(lineChartData[0].data[i]) "  class="p-4">
                                         {{lineChartData[0].data[i]}}
+                                    </span>
+                                    <span  *ngIf="lineChartData[0].data[i] && !isNumber(lineChartData[0].data[i])" class="p-4">
+                                        {{lineChartData[0].data[i].y}}
                                     </span>
                                 </td>
                                 
@@ -120,7 +123,7 @@
                     </table>
                 </div>
             </ng-template>
-            <ng-template #regression>
+            <ng-template  #regression>
                 <div class="simple-table-container" ms-responsive-table>
                     <div class=" table-title">
                         Datos de Tendencia

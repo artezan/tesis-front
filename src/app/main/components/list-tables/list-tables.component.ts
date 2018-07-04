@@ -9,6 +9,8 @@ import { TablesDataService } from '../../../services/tables-data.service';
 import * as XLSX from 'xlsx';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { SumaryTable } from 'models/sumary-table.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { API_URL } from '_config/api.url';
 
 @Component({
     selector: 'app-list-tables',
@@ -32,6 +34,7 @@ export class ListTablesComponent implements OnInit {
     showLoader = false;
     nameSumary: string;
     dataSumary: SumaryTable;
+    type: string;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private route: ActivatedRoute,
@@ -39,7 +42,7 @@ export class ListTablesComponent implements OnInit {
         private tableDataService: TablesDataService,
         private _fuseSidebarService: FuseSidebarService,
         private router: Router,
-
+        private http: HttpClient
     ) {
         this.route.queryParams.subscribe(params => {
             if (params.email) {
@@ -85,43 +88,69 @@ export class ListTablesComponent implements OnInit {
     }
     detectFiles(event): void {
         const file = event.target.files[0];
+        const body: FormData = new FormData();
+        body.append('file', file);
         const name: string = event.target.files.item(0).name;
         const typeFile: string = name.substring(name.indexOf('.') + 1);
+        this.type = typeFile;
         console.log(typeFile);
         const tableName = name
             .substring(0, name.indexOf('.'))
             .replace(/ /g, '%20');
+        if (typeFile === 'docx') {
+            this.getDocx(body, tableName);
+        }
+
         const reader = new FileReader();
+        const readerBuffer = new FileReader();
         reader.onload = r => {
             if (typeFile === 'csv') {
                 const jsonData = this.csvTojs(reader.result);
                 this.uplodadData(jsonData, tableName);
+            } else if (typeFile === 'docx') {
+                // this.getDocx(event.target.files[0]);
             } else {
                 this.excelFile(event, tableName);
             }
         };
         reader.readAsText(file);
+        readerBuffer.onload = f => {
+            if (typeFile === 'docx') {
+                //   this.getDocx(readerBuffer.result);
+            }
+        };
+        readerBuffer.readAsDataURL(file);
+    }
+    getDocx(body, tableName): void {
+        this.showLoader = true;
+        this.http.post(API_URL.FILE_POST, body).subscribe((d: any) => {
+            console.log(d);
+            this.uplodadData(d.data, tableName);
+        });
     }
     uplodadData(dataToUp, name: string): void {
         this.showLoader = true;
         this.tableDataService
-            .sendData(dataToUp, name, this.email)
+            .sendData(dataToUp, name, this.email, this.type)
             .subscribe(res => {
                 this.showLoader = false;
                 console.log(res);
                 this.dataSource = this.userSessionService.getUser(this.email);
             });
     }
-    onSelect(row): void {
-        this.userSessionService.userTableSelect.next(row);
-        this.router.navigate(['panel']);
+    onSelect(row: UserSessionTables): void {
+        this.userSessionService.userTableSelect.next(row.name);
+        if (row.type && row.type === 'docx') {
+            this.router.navigate(['docx-data']);
+        } else {
+            this.router.navigate(['panel']);
+        }
     }
     // helper
     csvTojs(csv): any[] {
         const lines = csv.split('\n');
         const result = [];
         const headers = lines[0].split(',');
-
 
         for (let i = 1; i < lines.length; i++) {
             const obj = {};
@@ -168,9 +197,9 @@ export class ListTablesComponent implements OnInit {
                     if (value[value.length - 1] === '"') {
                         value = value.substr(0, value.length - 1);
                     }
-                    
+
                     const key = headers[queryIdx++];
-                    
+
                     obj[key.trim()] = value;
                     startValueIdx = idx + 1;
                 }
@@ -244,6 +273,9 @@ export class ListTablesComponent implements OnInit {
                     if (columsNames.length === row.length) {
                         columsNames.forEach((nameColum, numColum) => {
                             obj[nameColum] = row[numColum];
+                            if (!isNaN(obj[nameColum])) {
+                                obj[nameColum] = +row[numColum];
+                            }
                         });
                         arrRows.push(obj);
                     }

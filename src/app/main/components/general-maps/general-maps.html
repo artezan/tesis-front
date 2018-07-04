@@ -1,0 +1,11 @@
+    <div class="w-map">
+    <div #gmap2 class="map-full"></div>
+    <div class="content-map" *ngIf="showModal">
+            <!-- <button  class="button-close" (click)="this.showModal = false;">
+            Close
+        </button> -->
+        
+        <!-- <page-item-detail [itemId]="itemId"></page-item-detail> -->
+        <app-modal-detail [titleItem]="titleItem" [itemId]="itemId"></app-modal-detail>
+    </div>
+</div>

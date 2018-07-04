@@ -1,0 +1,51 @@
+@import '~cesar-table-artezan/release/index.css';
+@import '~cesar-table-artezan/release/themes/material.css';
+@import '~cesar-table-artezan/release/themes/material.css';
+@import '~cesar-table-artezan/release/assets/icons.css';
+.data-table {
+    height: 87%;
+    // height:  47rem;
+    margin: 3%;
+    
+  }
+  .colum-size datatable-header-cell > div {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: left !important;
+    flex-direction: column;
+    align-items: center;
+  }
+  .flexc datatable-header-cell {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .sort-hide
+    datatable-header-cell
+    > div
+    > span.sort-btn.sort-desc.datatable-icon-down::before {
+    display: none;
+  }
+  .sort-hide
+    datatable-header-cell
+    > div
+    > span.sort-btn.sort-asc.datatable-icon-up::before {
+    display: none;
+  }
+  .sortable .sort-btn:after {
+    font-family: data-table;
+    content: 'c';
+  }
+  .sortable .sort-btn.datatable-icon-down:after {
+    content: 'f';
+  }
+  .sort-btn.datatable-icon-up:after {
+    content: 'e';
+  }
+  
+  .table datatable-row-wrapper {
+    border-bottom: 1px solid #ddd;
+  }
+  .input-responsive datatable-header-cell > input {
+    max-width: 100%;
+  }
+  

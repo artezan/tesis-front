@@ -1,0 +1,24 @@
+    <!-- <mat-toolbar [class.mat-elevation-z2]=true color="accent" class="top-bar">Algo</mat-toolbar> -->
+    <div class="course-content" fxLayout="column">
+        <div class="header-modal" fxLayout="row" fxLayoutAlign="center center">
+
+        <div style="color: black !important; " fxFlex>
+            {{titleItem}}
+        </div>
+
+    </div>
+   
+    
+    <div class="modal-guts">
+        <ul>
+            <li *ngFor="let key of arrkeys">
+                <b>
+                    <p matline>{{key}}</p>
+                </b>
+                <p matline>{{dataItem[key]}}</p>
+            <mat-divider></mat-divider>
+            </li>
+        </ul>
+
+    </div>
+</div>

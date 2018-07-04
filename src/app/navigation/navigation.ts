@@ -41,11 +41,25 @@ export const navigation: FuseNavigation[] = [
                 url: '/save-chart'
             },
             {
-                id: 'tables',
-                title: 'TensorFlow',
+                id: 'brain',
+                title: 'Neuronal',
                 type: 'item',
                 icon: 'view_headline',
-                url: '/ts-test'
+                url: '/brain'
+            },
+            {
+                id: 'maps',
+                title: 'Mapa',
+                type: 'item',
+                icon: 'map',
+                url: '/maps'
+            },
+            {
+                id: 'table-data',
+                title: 'Datos',
+                type: 'item',
+                icon: 'assignment_returned',
+                url: '/table-data'
             },
             {
                 id: 'tables',

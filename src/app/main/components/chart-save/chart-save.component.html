@@ -18,12 +18,28 @@
     <div class="content p-24">
         <div *ngIf="hasData then data else noData"></div>
         <ng-template #data>
+                <div class="toogle-btns" style="    margin-bottom: 2% !important ">
+                        <button mat-raised-button class="btn" (click)="changeClass('row'); ">Dinámico</button>
+                        <button mat-raised-button class="btn" (click)="changeClass('col')">Completo</button>
+                        <button mat-raised-button class="btn" (click)="changeOption3()">Tema 1 
+                            <mat-icon aria-label="Example icon-button with a heart icon">power_input</mat-icon></button>
+                        <button mat-raised-button class="btn"  (click)="changeOption4()">Tema 2
+                             <mat-icon aria-label="Example icon-button with a heart icon">view_comfy</mat-icon></button>
+                </div>
             <!-- <div fxLayout="column" fxLayoutAlign="center"> -->
-                    <div [@animateStagger]="{value:'50'}" class="flex-box-saved">
-                <div *ngFor="let chart of ( chartsSaved$ | async)"  [@animate]="{value:'*',params:{y:'100%'}}" class="colum-saved" >
+                <span *ngIf="option1 || option2" >
+                     <div [@animateStagger]="{value:'50'}" 
+                    [ngClass]="{'flex-box-saved-row': containerClass == 'row',
+                                'flex-box-saved-col': containerClass == 'col'}">
+                <div *ngFor="let chart of ( chartsSaved$ | async); let i = index"  [@animate]="{value:'*',params:{y:'100%'}}"
+                 class="colum-saved" [ngStyle]="{'order': arrItemFlex[i].order, 'width': arrItemFlex[i].width}" >
                         <div class=" font-size-18 font-weight-300 panel-margin">
                             {{chart.lineChartData[0].label}} / {{chart.titleX}}
                         </div>
+                        <button mat-raised-button class="btn" (click)="changeOrder(true, i)">Atras</button>
+                        <button mat-raised-button class="btn" (click)="changeOrder(false, i)">Adelante</button>
+                        <button mat-raised-button class="btn" *ngIf="arrItemFlex[i].width !== '100%' && option1 " (click)="changeToFull(i)">100%</button>
+                        <button mat-raised-button class="btn" *ngIf="arrItemFlex[i].width !== 'auto' && option1 " (click)="changeToDiv(i)">Dividido</button>
                     <app-general-chart
                       [showdChart]= "chart.showChart"
                       [lineChartData]="chart.lineChartData"
@@ -39,7 +55,142 @@
                 ></app-general-chart>
                 </div>
                 </div>
-            <!-- </div> -->
+            </span>
+                <!-- team1 -->
+                <!-- Primero -->
+                <span *ngIf="option3" >
+                <div class="row-s" >
+                    <div class="col-s-100" *ngFor="let chart of ( chartsSaved$ | async); let i = index; first as isFirst " 
+                     [@animate]="{value:'*',params:{y:'100%'}}">
+                       
+                                <div *ngIf="isFirst"  class=" font-size-18 font-weight-300 panel-margin">
+                                    {{chart.lineChartData[0].label}} / {{chart.titleX}}
+                                </div>
+                                
+                            <app-general-chart *ngIf="isFirst"
+                              [showdChart]= "chart.showChart"
+                              [lineChartData]="chart.lineChartData"
+                              [lineChartLabels]="chart.lineChartLabels"
+                              [lineChartLegend]="chart.lineChartLegend"
+                              [numSort]="chart.numSort"
+                              [typeSort]="chart.typeSort"
+                              [titleX]="chart.titleX"
+                              [lineChartColors]="chart.lineChartColors"
+                              [lineChartType]="chart.lineChartType"
+                              [isGenerator]=false
+                              [isOneDataSvc]="chart.isOneData"
+                        ></app-general-chart>
+
+                    </div>
+                </div>
+                <!-- /Primero -->
+                <!-- demas -->
+                <div class="row-s">
+                    <span *ngFor="let chart of ( chartsSaved$ | async); let i = index; first as isFirst " >
+                    <div class="col-s-33"  *ngIf="!isFirst" 
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div *ngIf="!isFirst"  class=" font-size-18 font-weight-300 panel-margin">
+                            {{chart.lineChartData[0].label}} / {{chart.titleX}}
+                        </div>
+                        
+                    <app-general-chart *ngIf="!isFirst"
+                      [showdChart]= "chart.showChart"
+                      [lineChartData]="chart.lineChartData"
+                      [lineChartLabels]="chart.lineChartLabels"
+                      [lineChartLegend]="chart.lineChartLegend"
+                      [numSort]="chart.numSort"
+                      [typeSort]="chart.typeSort"
+                      [titleX]="chart.titleX"
+                      [lineChartColors]="chart.lineChartColors"
+                      [lineChartType]="chart.lineChartType"
+                      [isGenerator]=false
+                      [isOneDataSvc]="chart.isOneData"
+                ></app-general-chart>
+
+                    </div>
+                </span>
+                </div>
+            </span>
+                <!-- /demas -->
+                <!-- /tema1 -->
+                <!-- tema2 -->
+                <span *ngIf="option4" >
+                   
+                        <!-- demas -->
+                        <div class="row-s">
+                            <span *ngFor="let chart of ( chartsSaved$ | async); let i = index; first as isFirst " >
+                            <div class="col-s-33"  *ngIf="!isFirst" 
+                            [@animate]="{value:'*',params:{y:'100%'}}">
+                            <div *ngIf="!isFirst"  class=" font-size-18 font-weight-300 panel-margin">
+                                    {{chart.lineChartData[0].label}} / {{chart.titleX}}
+                                </div>
+                                
+                            <app-general-chart *ngIf="!isFirst"
+                              [showdChart]= "chart.showChart"
+                              [lineChartData]="chart.lineChartData"
+                              [lineChartLabels]="chart.lineChartLabels"
+                              [lineChartLegend]="chart.lineChartLegend"
+                              [numSort]="chart.numSort"
+                              [typeSort]="chart.typeSort"
+                              [titleX]="chart.titleX"
+                              [lineChartColors]="chart.lineChartColors"
+                              [lineChartType]="chart.lineChartType"
+                              [isGenerator]=false
+                              [isOneDataSvc]="chart.isOneData"
+                        ></app-general-chart>
+        
+                            </div>
+                        </span>
+                        </div>
+                         
+                        <!-- /Primero -->
+                        <div class="row-s" >
+                                <div class="col-s-100" *ngFor="let chart of ( chartsSaved$ | async); let i = index; first as isFirst " 
+                                 [@animate]="{value:'*',params:{y:'100%'}}">
+                                   
+                                            <div *ngIf="isFirst"  class=" font-size-18 font-weight-300 panel-margin">
+                                                {{chart.lineChartData[0].label}} / {{chart.titleX}}
+                                            </div>
+                                            
+                                        <app-general-chart *ngIf="isFirst"
+                                          [showdChart]= "chart.showChart"
+                                          [lineChartData]="chart.lineChartData"
+                                          [lineChartLabels]="chart.lineChartLabels"
+                                          [lineChartLegend]="chart.lineChartLegend"
+                                          [numSort]="chart.numSort"
+                                          [typeSort]="chart.typeSort"
+                                          [titleX]="chart.titleX"
+                                          [lineChartColors]="chart.lineChartColors"
+                                          [lineChartType]="chart.lineChartType"
+                                          [isGenerator]=false
+                                          [isOneDataSvc]="chart.isOneData"
+                                    ></app-general-chart>
+            
+                                </div>
+                            </div>
+                            <!-- /Primero -->
+                    </span>
+                <!-- /tema2 -->
+                 <!-- tema3-->
+                 <div>
+                        <!-- Primero -->
+                        <div>
+    
+                        </div>
+                        <!-- Primero -->
+                        <!-- demas -->
+                        <div>
+                            <div>
+    
+                            </div>
+    
+                        </div>
+                        <!-- demas -->
+    
+    
+                    </div>
+                    <!-- tema3 -->
+
         </ng-template>
         <ng-template #noData>
             <div class="no-courses">
@@ -47,6 +198,13 @@
 
             </div>
         </ng-template>
+      
+        
     </div>
+
+
+ 
+      
     <!-- / CONTENT -->
 </div>
+

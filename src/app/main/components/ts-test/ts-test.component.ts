@@ -1,8 +1,16 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import * as ss from 'simple-statistics';
+import * as ml from 'ml-regression';
 import * as tf from '@tensorflow/tfjs';
 import { DrawableDirective } from '../../directives/drawable.directive';
 import { fuseAnimations } from '@fuse/animations';
+import {
+    yTensoExample,
+    xTensorExample,
+    mlX,
+    mlY
+} from '../../../../_config/data-model';
+// const PolynomialRegression = require('ml-regression').NLR.PolynomialRegression;
 
 @Component({
     selector: 'app-ts-test',
@@ -10,7 +18,6 @@ import { fuseAnimations } from '@fuse/animations';
     styleUrls: ['./ts-test.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
-    
 })
 export class TsTestComponent implements OnInit {
     // TF
@@ -28,13 +35,18 @@ export class TsTestComponent implements OnInit {
         showLine?: boolean;
         fill?: boolean;
     }[] = [];
-    // chart
+    // ml
+    SLR = ml.SLR;
+
     constructor() {
         this.loadModel();
+        this.trainNewModel();
     }
     // tslint:disable:typedef
 
-    ngOnInit() {}
+    ngOnInit() {
+        // this.mlRegression();
+    }
     //// LOAD PRETRAINED KERAS MODEL ////
     async loadModel() {
         this.model = await tf.loadModel('/assets/model.json');
@@ -61,5 +73,46 @@ export class TsTestComponent implements OnInit {
             console.log(this.predictions);
             //  this.dataNum[0].data = this.predictions;
         });
+    }
+    // TF
+    // tslint:disable:typedef
+    async trainNewModel() {
+        // Define a model for linear regression.
+        this.linearModel = tf.sequential();
+        this.linearModel.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+
+        // Prepare the model for training: Specify the loss and the optimizer.
+        this.linearModel.compile({
+            loss: 'meanSquaredError',
+            optimizer: 'sgd'
+        });
+
+        // Training data, completely random stuff
+        const ys = tf.tensor1d(yTensoExample);
+        const xs = tf.tensor1d(xTensorExample);
+
+        // Train
+        await this.linearModel.fit(xs, ys);
+
+        console.log('model trained!');
+    }
+    linearPrediction(val) {
+        const output = this.linearModel.predict(
+            tf.tensor2d([val], [1, 1])
+        ) as any;
+        this.prediction = Array.from(output.dataSync())[0];
+        console.log(output.dataSync());
+    }
+    mlRegression(): void {
+        const inputs = mlX;
+        const outputs = mlY;
+        const regressionModel = new this.SLR(inputs, outputs);
+        console.log(regressionModel.toString(3));
+        console.log(regressionModel.predict(20));
+        // const regression = new PolynomialRegression(inputs, outputs, 5);
+        // console.log(regression.predict(80)); // Apply the model to some x value. Prints 2.547.
+        // console.log(regression.coefficients); // Prints the coefficients in increasing order of power (from 0 to degree).
+        // console.log(regression.toString(3)); // Prints a human-readable version of the function.
+        // console.log(regression.toLaTeX());
     }
 }

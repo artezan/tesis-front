@@ -89,6 +89,8 @@ export class EstimateComponent implements OnInit {
             pointHitRadius: 10
         }
     ];
+    arrXY;
+    resultRegression:number;
 
     constructor(
         private tableService: TablesDataService,
@@ -149,6 +151,7 @@ export class EstimateComponent implements OnInit {
                 });
             });
             // calcula la regress
+            this.arrXY = arrXY;
             arrOptionsX.forEach(x => {
                 const linearRegression = ss.linearRegressionLine(
                     ss.linearRegression(arrXY)
@@ -235,6 +238,11 @@ export class EstimateComponent implements OnInit {
             error += restSquared;
         });
         return error / (arrRealY.length / 2);
+    }
+    getRegression(x): void {
+        this.resultRegression = ss.linearRegressionLine(
+            ss.linearRegression(this.arrXY)
+        )(+x);
     }
     // TF
     // tslint:disable:typedef

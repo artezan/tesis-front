@@ -1,0 +1,82 @@
+<div id="docx-analytics" class="page-layout blank grey-100-bg">
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center">
+    
+            <div class="hero-text">
+                <mat-icon class="hero-icon">show_chart</mat-icon>
+                <h1 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Analizar Documento
+                </h1>
+                <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
+                    Visualizar Datos
+    
+                </h3>
+            </div>
+    
+        </div>
+        <!-- / HEADER -->
+        <div class="toogle-btns">
+                <button mat-raised-button class="btn" (click)="changeGrid('option1')">Opcion 1</button>
+                <button mat-raised-button class="btn" (click)="changeGrid('option2')">Opcion 2</button>
+                <button mat-raised-button class="btn" (click)="quickFilter()">Filtrado Rápido</button>
+        </div>
+    <!-- Panel -->
+    
+    <div class="row-flex">
+      <div 
+       [ngClass]="{'column-100': optionGrid == 'option1',
+                    'column-25': optionGrid == 'option2' }"  >
+                    <div class=" font-size-18 font-weight-300 panel-margin" >
+                            Filtros
+                         </div>
+      <div class="panel-margin">
+            
+        <mat-card>
+            <mat-card-header>
+                <p>
+                  <b>Palabras (Total: {{sizeOfDoc}})</b>  
+                </p>
+                
+            </mat-card-header>
+            
+
+            <div class="flexbox-panel">
+                <mat-chip-list>
+                    <span *ngFor="let label of lineChartLabels; index as i" >
+                        <mat-chip  *ngIf="i <50"  [removable]=true color="accent" (removed)="remove(label)" selected>
+                        {{label}}
+                        <mat-icon matChipRemove >cancel</mat-icon>
+                    </mat-chip>
+                    </span>
+                  </mat-chip-list>
+
+            </div>
+
+
+        </mat-card>
+    </div>  
+    </div>
+    <div [ngClass]="{'column-100': optionGrid == 'option1',
+    'column-75': optionGrid == 'option2' }">
+    <div class=" font-size-18 font-weight-300 panel-margin">
+        Datos Graficados
+    </div>
+    <div>
+        <app-general-chart title='' 
+    [lineChartData]="lineChartData" 
+    [lineChartLabels]="lineChartLabels" 
+    [showdChart]="showdChart"
+    [titleX]="optionX"
+    lineChartType='bar'
+    [lineChartColors]='lineChartColors'
+    [refreshData]="refreshData"
+    [lineChartOptions]="lineChartOptions"
+    ></app-general-chart>
+    </div> 
+    </div>  
+    </div>
+    
+   
+    
+
+</div>

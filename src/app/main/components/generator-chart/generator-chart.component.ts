@@ -22,6 +22,9 @@ export class GeneratorChartComponent implements OnInit {
         label: string;
     }[] = [];
     lineChartLabels: string[] = [];
+    optionGrid = 'option1';
+    refreshData: { arrXY: any[]; arrStr: any[] };
+
     constructor(
         private tableService: TablesDataService,
         private userSessionService: UserSessionService
@@ -78,5 +81,8 @@ export class GeneratorChartComponent implements OnInit {
             this.showdChart = true;
         }
     }
-    
+    // Cambiar vista
+    changeGrid(option): void {
+        this.optionGrid = option;
+    }
 }

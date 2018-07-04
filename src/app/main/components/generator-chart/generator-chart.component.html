@@ -15,47 +15,28 @@
     
         </div>
         <!-- / HEADER -->
+        <div class="toogle-btns">
+                <button mat-raised-button class="btn" (click)="changeGrid('option1')">Opcion 1</button>
+                <button mat-raised-button class="btn" (click)="changeGrid('option2')">Opcion 2</button>
+        </div>
     <!-- Panel -->
-    <div class="panel-margin">
+    
+    <div class="row-flex">
+      <div 
+       [ngClass]="{'column-100': optionGrid == 'option1',
+                    'column-25': optionGrid == 'option2' }"  >
+                    <div class=" font-size-18 font-weight-300 panel-margin" >
+                            Filtros
+                         </div>
+      <div class="panel-margin">
+            
         <mat-card>
             <mat-card-header>
                 <p>
                     Variables:
                 </p>
             </mat-card-header>
-            <!-- <div>
-            <mat-chip-list>
-      
-              <mat-chip color="primary" *ngIf="apartmentSelect" class="chips-font" selected="true" (removed)="remove('apartmentSelect')"
-                [removable]="removable">
-                Depa:{{apartmentSelect.Interior}}
-                <mat-icon matChipRemove *ngIf="removable">
-                  cancel
-                </mat-icon>
-              </mat-chip>
-              <mat-chip color="accent" *ngIf="state" class="chips-font" selected="true" (removed)="remove('state')" [removable]="removable">
-                Estado:{{state}}
-                <mat-icon matChipRemove *ngIf="removable">
-                  cancel
-                </mat-icon>
-              </mat-chip>
-              <mat-chip color="primary" *ngIf="monthInput" class="chips-font" selected="true" (removed)="remove('monthInput')" [removable]="removable">
-                Mes:{{monthInput.label}}
-                <mat-icon matChipRemove *ngIf="removable">
-                  cancel
-                </mat-icon>
-              </mat-chip>
-              <mat-chip color="accent" *ngIf="yearInput" class="chips-font" selected="true" (removed)="remove('yearInput')" [removable]="removable">
-                Año:{{yearInput}}
-                <mat-icon matChipRemove *ngIf="removable">
-                  cancel
-                </mat-icon>
-              </mat-chip>
-              <mat-chip *ngIf="!yearInput && !monthInput && !apartmentSelect && !state " class="chips-font" selected="false">
-                Ningun filtro seleccionado
-              </mat-chip>
-            </mat-chip-list>
-          </div> -->
+
             <div class="flexbox-panel">
                 <div>
                     <!-- Y -->
@@ -80,16 +61,26 @@
 
 
         </mat-card>
+    </div>  
     </div>
+    <div [ngClass]="{'column-100': optionGrid == 'option1',
+    'column-75': optionGrid == 'option2' }">
     <div class=" font-size-18 font-weight-300 panel-margin">
         Datos Graficados
     </div>
-    <app-general-chart title='' 
+    <div>
+        <app-general-chart title='' 
     [lineChartData]="lineChartData" 
     [lineChartLabels]="lineChartLabels" 
     [showdChart]="showdChart"
     [titleX]="optionX"
     lineChartType='line'
     ></app-general-chart>
+    </div> 
+    </div>  
+    </div>
+    
+   
+    
 
 </div>

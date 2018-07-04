@@ -72,7 +72,6 @@ export class PanelComponent implements OnInit {
                     arrNumbersColum.push(row[key]);
                 }
             });
-            console.log(arrNumbersColum);
             let meanColum;
             let varianceColum;
             let desviationnColum;
@@ -110,15 +109,14 @@ export class PanelComponent implements OnInit {
                 name: nameColum,
                 totalItems: numItemsColum,
                 type: typeColum,
-                mean: meanColum,
-                variance: varianceColum,
-                desviation: desviationnColum,
-                max: maxColum,
-                min: minColum,
-                sum: sumColum
+                mean: +meanColum,
+                variance: +varianceColum,
+                desviation: +desviationnColum,
+                max: +maxColum,
+                min: +minColum,
+                sum: +sumColum
             });
         });
         this.isLoader = true;
-        console.log(this.columsTable);
     }
 }

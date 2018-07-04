@@ -18,7 +18,8 @@ import {
     MatInputModule,
     MatCardModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatToolbarModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
@@ -46,6 +47,15 @@ import { EstimateComponent } from './main/components/estimate/estimate.component
 import { DrawableDirective } from './main/directives/drawable.directive';
 import { ChartComponent } from './main/components/chart-number/chart.component';
 import { TsTestComponent } from './main/components/ts-test/ts-test.component';
+import { GeneralMapsComponent } from './main/components/general-maps/general-maps';
+import { MapsComponent } from './main/components/maps/maps.component';
+import { ListGpsComponent } from './main/components/list-gps/list-gps.component';
+import { ModalDetailComponent } from './main/components/modal-detail/modal-detail.component';
+import { TableDataComponent } from './main/components/table-data/table-data.component';
+import { NgxDatatableModule } from 'cesar-table-artezan';
+import { BrainPredictionComponent } from './main/components/brain-prediction/brain-prediction.component';
+import { DocxDataComponent } from './main/components/docx-data/docx-data.component';
+
 
 const appRoutes: Routes = [
     { path: 'list-tables', component: ListTablesComponent },
@@ -54,7 +64,10 @@ const appRoutes: Routes = [
     { path: 'generator-chart', component: GeneratorChartComponent },
     { path: 'save-chart', component: ChartSaveComponent },
     { path: 'regression', component: EstimateComponent },
-    { path: 'ts-test', component: TsTestComponent },
+    { path: 'brain', component: BrainPredictionComponent },    
+    { path: 'maps', component: MapsComponent },
+    { path: 'table-data', component: TableDataComponent },
+    { path: 'docx-data', component: DocxDataComponent },
     {
         path: 'apps',
         loadChildren: './main/apps/apps.module#AppsModule'
@@ -79,7 +92,14 @@ const appRoutes: Routes = [
         EstimateComponent,
         DrawableDirective,
         ChartComponent,
-        TsTestComponent
+        TsTestComponent,
+        GeneralMapsComponent,
+        MapsComponent,
+        ListGpsComponent,
+        ModalDetailComponent,
+        TableDataComponent,
+        BrainPredictionComponent,
+        DocxDataComponent
         
     ],
     imports: [
@@ -89,6 +109,8 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
 
         TranslateModule.forRoot(),
+        NgxDatatableModule,
+        
 
         // Material moment date module
         MatMomentDateModule,
@@ -117,6 +139,7 @@ const appRoutes: Routes = [
         MatCardModule,
         MatSelectModule,
         MatDividerModule,
+        MatToolbarModule,
 
         // App modules
         LayoutModule,

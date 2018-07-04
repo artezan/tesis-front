@@ -125,4 +125,35 @@
 .panel-margin {
     margin: 3%
 }
+.row-flex {
+    display: flex;
+    flex-wrap:  wrap;
+}
+.column-25 {
+    width: 25%;
+}
+.column-75 {
+    width: 75%;
+}
+.column-100 {
+    width: 100%
+}
+.btn {
+    margin-left: 1% !important;
+  }
+  .toogle-btns {
+    text-align: right;
+    margin-right: 1%;
+    margin-top: 2%;
+    margin-bottom: -2%;
+  }
+
+@media only screen and (max-width: 600px) {
+    .column-25 {
+        width: 100%;
+    }
+    .column-75 {
+        width: 100%;
+    }
+}
 
