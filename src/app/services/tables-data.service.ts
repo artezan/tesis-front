@@ -4,12 +4,16 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { API_URL } from '_config/api.url';
 import { map } from 'rxjs/operators';
 import { SumaryTable } from 'models/sumary-table.model';
+import { SocketIoService } from './socket-io.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TablesDataService {
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private socketService: SocketIoService
+    ) {}
     deleteTable(table): Observable<any> {
         const header = new HttpHeaders({
             email: 'cesar@correo.com'
@@ -49,7 +53,7 @@ export class TablesDataService {
     getPredictionBrain(body): Observable<any> {
         return (
             this.http
-                 .post(API_URL.BRAIN, body)
+                .post(API_URL.BRAIN, body)
                 // .post('http://localhost:3000/api/v1/general/brain/brain', body)
                 .pipe(map((data: any) => data.data))
         );

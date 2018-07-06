@@ -24,7 +24,7 @@
 
             <!-- ADD FILE BUTTON -->
             <div class="file-uploader">
-                <input hidden type="file" (change)="detectFiles($event)" #fileInput/>
+                <input hidden type="file" (change)="detectFiles($event)" id="fileInput" #fileInput/>
                 <button mat-fab class="add-file-button mat-warn" (click)="fileInput.click()" aria-label="Add file" [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}">
                     <mat-icon>add</mat-icon>
                 </button>
@@ -33,7 +33,6 @@
 
         </div>
         <!-- / HEADER -->
-
         <!-- CONTENT -->
         <div *ngIf="showLoader; then spinner else table "></div>
         <ng-template #spinner>
@@ -81,7 +80,7 @@
                             </button>
                         </mat-cell>
                     </ng-container>
-                    <!-- delete Button Column -->
+                    <!-- delete Button Column deleteTable(row.name) sendMessage(row.name) -->
                     <ng-container cdkColumnDef="delete-button">
                         <mat-header-cell *cdkHeaderCellDef fxFlex="48px"></mat-header-cell>
                         <mat-cell *cdkCellDef="let row" fxFlex="48px">
@@ -100,7 +99,6 @@
             </div>
         </ng-template>
 
-
         <!-- / CONTENT -->
 
     </div>
@@ -108,4 +106,5 @@
     <fuse-sidebar class="sidebar main-sidebar" name="app-side-table" position="right">
         <app-side-table [data]="dataSumary" [name]="nameSumary"></app-side-table>
     </fuse-sidebar>
+    
 </div>

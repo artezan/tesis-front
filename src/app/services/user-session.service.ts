@@ -17,6 +17,7 @@ export interface UserChartSettings {
     numSort: number;
     typeSort: string;
     titleX: string;
+    titleY: string;
     isOneData: boolean;
 }
 

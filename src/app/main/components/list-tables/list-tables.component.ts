@@ -11,6 +11,20 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { SumaryTable } from 'models/sumary-table.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from '_config/api.url';
+import { SocketIoService } from 'app/services/socket-io.service';
+
+// Actions you can take on the App
+export enum Action {
+    JOINED,
+    LEFT,
+    RENAME
+}
+
+// Socket.io events
+export enum Event {
+    CONNECT = 'connect',
+    DISCONNECT = 'disconnect'
+}
 
 @Component({
     selector: 'app-list-tables',
@@ -35,6 +49,7 @@ export class ListTablesComponent implements OnInit {
     nameSumary: string;
     dataSumary: SumaryTable;
     type: string;
+    ioConnection: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private route: ActivatedRoute,
@@ -42,7 +57,8 @@ export class ListTablesComponent implements OnInit {
         private tableDataService: TablesDataService,
         private _fuseSidebarService: FuseSidebarService,
         private router: Router,
-        private http: HttpClient
+        private http: HttpClient,
+        public socketService: SocketIoService
     ) {
         this.route.queryParams.subscribe(params => {
             if (params.email) {
@@ -67,6 +83,19 @@ export class ListTablesComponent implements OnInit {
 
     ngOnInit(): void {
         this.dataSource = this.userSessionService.getUser(this.email);
+        this.socketService.onGetEventUser().subscribe(userName => {
+            this.dataSource = this.userSessionService.getUser(this.email);
+        });
+        this.initIoConnection();
+    }
+    private initIoConnection(): void {
+        this.socketService.onEvent(Event.CONNECT).subscribe(() => {
+            console.log('connected');
+        });
+
+        this.socketService.onEvent(Event.DISCONNECT).subscribe(() => {
+            console.log('disconnected');
+        });
     }
     openDetail(name): void {
         this.nameSumary = name;
@@ -81,7 +110,6 @@ export class ListTablesComponent implements OnInit {
         this._fuseSidebarService.getSidebar('app-side-table').toggleOpen();
     }
     deleteTable(tableName: string): void {
-        console.log(tableName);
         this.tableDataService.deleteTable(tableName).subscribe(data => {
             this.dataSource = this.userSessionService.getUser(this.email);
         });
@@ -120,6 +148,8 @@ export class ListTablesComponent implements OnInit {
             }
         };
         readerBuffer.readAsDataURL(file);
+        // refresh input value
+    //    (<HTMLInputElement>document.getElementById('fileInput')).value = '';
     }
     getDocx(body, tableName): void {
         this.showLoader = true;
@@ -137,6 +167,7 @@ export class ListTablesComponent implements OnInit {
                 console.log(res);
                 this.dataSource = this.userSessionService.getUser(this.email);
             });
+            (<HTMLInputElement>document.getElementById('fileInput')).value = '';
     }
     onSelect(row: UserSessionTables): void {
         this.userSessionService.userTableSelect.next(row.name);

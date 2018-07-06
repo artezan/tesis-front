@@ -40,6 +40,8 @@
                         <button mat-raised-button class="btn" (click)="changeOrder(false, i)">Adelante</button>
                         <button mat-raised-button class="btn" *ngIf="arrItemFlex[i].width !== '100%' && option1 " (click)="changeToFull(i)">100%</button>
                         <button mat-raised-button class="btn" *ngIf="arrItemFlex[i].width !== 'auto' && option1 " (click)="changeToDiv(i)">Dividido</button>
+                        <button mat-raised-button class="btn" *ngIf="hideSumary[i]  && option1 " (click)="sumary(i, false)">Resumen</button>
+                        <button mat-raised-button class="btn" *ngIf="!hideSumary[i] && option1 " (click)="sumary(i, true)"> No Resumen</button>
                     <app-general-chart
                       [showdChart]= "chart.showChart"
                       [lineChartData]="chart.lineChartData"
@@ -48,10 +50,12 @@
                       [numSort]="chart.numSort"
                       [typeSort]="chart.typeSort"
                       [titleX]="chart.titleX"
+                      [titleY]="chart.titleY"
                       [lineChartColors]="chart.lineChartColors"
                       [lineChartType]="chart.lineChartType"
                       [isGenerator]=false
                       [isOneDataSvc]="chart.isOneData"
+                      [hideSumary]= "hideSumary[i]"
                 ></app-general-chart>
                 </div>
                 </div>
@@ -75,6 +79,7 @@
                               [numSort]="chart.numSort"
                               [typeSort]="chart.typeSort"
                               [titleX]="chart.titleX"
+                              [titleY]="chart.titleY"
                               [lineChartColors]="chart.lineChartColors"
                               [lineChartType]="chart.lineChartType"
                               [isGenerator]=false
@@ -101,6 +106,7 @@
                       [numSort]="chart.numSort"
                       [typeSort]="chart.typeSort"
                       [titleX]="chart.titleX"
+                      [titleY]="chart.titleY"
                       [lineChartColors]="chart.lineChartColors"
                       [lineChartType]="chart.lineChartType"
                       [isGenerator]=false
@@ -119,11 +125,13 @@
                         <!-- demas -->
                         <div class="row-s">
                             <span *ngFor="let chart of ( chartsSaved$ | async); let i = index; first as isFirst " >
-                            <div class="col-s-33"  *ngIf="!isFirst" 
+                            <div class="col-s-50"  *ngIf="!isFirst" 
                             [@animate]="{value:'*',params:{y:'100%'}}">
                             <div *ngIf="!isFirst"  class=" font-size-18 font-weight-300 panel-margin">
                                     {{chart.lineChartData[0].label}} / {{chart.titleX}}
                                 </div>
+                                <button mat-raised-button class="btn" *ngIf="hideSumary[i]  " (click)="sumary(i, false)">Resumen</button>
+                                <button mat-raised-button class="btn" *ngIf="!hideSumary[i]  " (click)="sumary(i, true)"> No Resumen</button>
                                 
                             <app-general-chart *ngIf="!isFirst"
                               [showdChart]= "chart.showChart"
@@ -137,6 +145,8 @@
                               [lineChartType]="chart.lineChartType"
                               [isGenerator]=false
                               [isOneDataSvc]="chart.isOneData"
+                              [hideSumary]= "hideSumary[i]"
+
                         ></app-general-chart>
         
                             </div>
@@ -151,6 +161,8 @@
                                             <div *ngIf="isFirst"  class=" font-size-18 font-weight-300 panel-margin">
                                                 {{chart.lineChartData[0].label}} / {{chart.titleX}}
                                             </div>
+                                            <button mat-raised-button class="btn" *ngIf="hideSumary[i]  " (click)="sumary(i, false)">Resumen</button>
+                                             <button mat-raised-button class="btn" *ngIf="!hideSumary[i]  " (click)="sumary(i, true)"> No Resumen</button>
                                             
                                         <app-general-chart *ngIf="isFirst"
                                           [showdChart]= "chart.showChart"
@@ -160,10 +172,13 @@
                                           [numSort]="chart.numSort"
                                           [typeSort]="chart.typeSort"
                                           [titleX]="chart.titleX"
+                                          [titleY]="chart.titleY"
                                           [lineChartColors]="chart.lineChartColors"
                                           [lineChartType]="chart.lineChartType"
                                           [isGenerator]=false
                                           [isOneDataSvc]="chart.isOneData"
+                                          [hideSumary]= "hideSumary[i]"
+
                                     ></app-general-chart>
             
                                 </div>

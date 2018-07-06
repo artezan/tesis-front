@@ -84,7 +84,7 @@
             </div>
             <div *ngIf="isRegression then regression else normalData" ></div>
             <ng-template  #normalData>
-                <div class="simple-table-container" ms-responsive-table>
+                <div *ngIf="!hideSumary"  class="simple-table-container" ms-responsive-table>
                     <div class=" table-title">
                         Resumen
                     </div>

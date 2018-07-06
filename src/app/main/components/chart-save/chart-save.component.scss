@@ -1,6 +1,9 @@
 @import "src/@fuse/scss/fuse";
 
 #academy-courses {
+    fuse-card {
+        min-width: '';
+    }
 
     .header {
         position: relative;
@@ -217,6 +220,9 @@
 }
 .col-s-33 {
     width: auto;
+}
+.col-s-50 {
+    width: 500px  !important;
 }
 .col-s-70 {
     width: 70%;

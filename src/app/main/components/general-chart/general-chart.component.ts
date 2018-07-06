@@ -15,6 +15,8 @@ import {
     UserChartSettings,
     UserSessionService
 } from '../../../services/user-session.service';
+import { SocketIoService } from '../../../services/socket-io.service';
+import { TablesDataService } from '../../../services/tables-data.service';
 
 @Component({
     selector: 'app-general-chart',
@@ -55,13 +57,23 @@ export class GeneralChartComponent implements OnInit, OnChanges {
     @Input() lineChartLegend = true;
     @Input() lineChartType = 'line';
     @Input()
-    lineChartOptions = {
+    lineChartOptions: any = {
         borderCapStyle: 'round',
-        responsive: true
+        responsive: true,
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }
+            ]
+        }
     };
     @Input() numSort: number;
     @Input() typeSort = 'all';
     @Input() titleX = '';
+    @Input() titleY = '';
     @Input() isGenerator = true;
     realData;
     realLabel;
@@ -79,13 +91,74 @@ export class GeneralChartComponent implements OnInit, OnChanges {
     };
     @Input() refreshData: { arrXY: any[]; arrStr: any[] };
     estimateY: Array<{ x: number; y: number }>;
+    // oculatar resumen
+    @Input() hideSumary = false;
+    // real time
+    tableName;
+    data$;
 
     constructor(
         public controllerChart: ChartControllerService,
-        private userSessionService: UserSessionService
+        private userSessionService: UserSessionService,
+        private tableService: TablesDataService,
+        private socketService: SocketIoService
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.changeChart();
+        // real time
+        this.userSessionService.userTableSelect.subscribe(tableName => {
+            if (tableName !== '') {
+                this.tableName = tableName;
+            }
+        });
+        this.socketService.onGetEventTable().subscribe(name => {
+            if (name === this.tableName) {
+                this.updateData();
+            }
+        });
+    }
+    updateData(): void {
+        this.tableService.getTable(this.tableName).subscribe((data: any[]) => {
+            console.log(data);
+            this.setfilters(data);
+        });
+    }
+    setfilters(newData: any[]): void {
+        const optionY = this.titleY;
+        const optionX = this.titleX;
+        const arrOptionsY: number[] = [];
+        const arrOptionsX: string[] = [];
+        if (optionX && optionY) {
+            newData.forEach(row => {
+                if (
+                    isNaN(row[optionY]) ||
+                    row[optionY] === '' ||
+                    row[optionY] === null ||
+                    row[optionY] === undefined
+                ) {
+                    row[optionY] = 0;
+                }
+                const pos = arrOptionsX.indexOf(row[optionX]);
+                if (pos === -1) {
+                    arrOptionsX.push(row[optionX]);
+                    arrOptionsY.push(row[optionY]);
+                } else {
+                    arrOptionsY[pos] += row[optionY];
+                }
+            });
+            this.lineChartData[0] = {
+                data: arrOptionsY,
+                label: optionY
+            };
+            this.lineChartLabels = arrOptionsX;
+            this.showdChart = true;
+            this.realData = this.lineChartData;
+            const a = (this.realLabel = this.lineChartLabels);
+            console.log(a);
+        }
+        this.filterByTop();
+    }
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.lineChartData) {
             if (changes.lineChartData.currentValue) {
@@ -198,8 +271,25 @@ export class GeneralChartComponent implements OnInit, OnChanges {
     changeChart(): void {
         if (this.lineChartType === 'doughnut' || this.lineChartType === 'pie') {
             this.lineChartLegend = false;
+            this.lineChartOptions = {
+                borderCapStyle: 'round',
+                responsive: true
+            };
         } else {
             this.lineChartLegend = true;
+            this.lineChartOptions = {
+                borderCapStyle: 'round',
+                responsive: true,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                suggestedMin: 0
+                            }
+                        }
+                    ]
+                }
+            };
         }
     }
     colorsChart(value): void {
@@ -235,6 +325,7 @@ export class GeneralChartComponent implements OnInit, OnChanges {
             numSort: this.numSort,
             typeSort: this.typeSort,
             titleX: this.titleX,
+            titleY: this.titleY,
             lineChartColors: this.lineChartColors,
             lineChartType: this.lineChartType,
             isOneData: this.isOneData

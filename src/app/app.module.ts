@@ -1,7 +1,7 @@
 import { GeneratorChartComponent } from './main/components/generator-chart/generator-chart.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -55,6 +55,7 @@ import { TableDataComponent } from './main/components/table-data/table-data.comp
 import { NgxDatatableModule } from 'cesar-table-artezan';
 import { BrainPredictionComponent } from './main/components/brain-prediction/brain-prediction.component';
 import { DocxDataComponent } from './main/components/docx-data/docx-data.component';
+import { ApiInterceptor } from '_config/api-interceptor';
 
 
 const appRoutes: Routes = [
@@ -152,6 +153,13 @@ const appRoutes: Routes = [
         }),
         ChartsModule
     ],
+    /*providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: ApiInterceptor,
+          multi: true
+        },
+    ],*/
     bootstrap: [AppComponent]
 })
 export class AppModule {}

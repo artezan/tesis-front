@@ -4,6 +4,7 @@ import { TablesDataService } from '../../../services/tables-data.service';
 import { UserSessionService } from '../../../services/user-session.service';
 import { fuseAnimations } from '@fuse/animations';
 import { prepositionDefault } from '_config/preposition';
+import { SocketIoService } from '../../../services/socket-io.service';
 
 @Component({
     selector: 'app-docx-data',
@@ -27,6 +28,7 @@ export class DocxDataComponent implements OnInit, OnDestroy {
     lineChartLabels: string[] = [];
     optionGrid = 'option1';
     refreshData: { arrXY: any[]; arrStr: any[] };
+    tableName: string;
     lineChartColors: Array<any> = [
         {
             backgroundColor: 'rgba(66,165,245, .5)',
@@ -61,7 +63,8 @@ export class DocxDataComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseNavigationService: FuseNavigationService,
         private tableService: TablesDataService,
-        private userSessionService: UserSessionService
+        private userSessionService: UserSessionService,
+        private socketService: SocketIoService
     ) {
         // ocultar menu
         this._fuseNavigationService.getNavigationItem(
@@ -80,15 +83,32 @@ export class DocxDataComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        // inicial
         this.userSessionService.userTableSelect.subscribe(tableName => {
             if (tableName !== '') {
-                this.tableService.getTable(tableName).subscribe((data: any) => {
-                    this.generateOptions(data);
-                    console.log(data);
-                });
+               this.tableName = tableName;
+                this.getData(tableName);
+            }
+        });
+        // evento recibir
+        this.socketService.onGetEventTable().subscribe(name => {
+            if (name === this.tableName) {
+                this.getData(this.tableName);
             }
         });
     }
+    private getData(tableName: string): void {
+        this.tableService.getTable(tableName).subscribe((data: any[]) => {
+            if (data.length === 0) {
+                this.showdChart = false;
+                this.lineChartLabels.length = 0;
+            } else {
+                this.generateOptions(data);
+            }
+            
+        });
+    }
+
     generateOptions(data: any[]): void {
         const arrXY: any[] = [];
         const arrStr: { str: string; val: number }[] = [];

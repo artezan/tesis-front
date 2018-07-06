@@ -21,6 +21,7 @@ export class ChartSaveComponent implements OnInit {
     option1 = false;
     option2 = true;
     hasData = false;
+    hideSumary = [];
     showLoader: boolean;
     chartsSaved$: Observable<UserChartSettings[]>;
 
@@ -31,6 +32,7 @@ export class ChartSaveComponent implements OnInit {
                 console.log(settingsArr);
                 settingsArr.forEach((item, i) => {
                     this.arrItemFlex.push({ order: i, pos: i, width: '100%' });
+                    this.hideSumary.push(false);
                 });
 
                 this.showLoader = false;
@@ -71,19 +73,25 @@ export class ChartSaveComponent implements OnInit {
         this.arrItemFlex[index].width = '100%';
     }
     changeToDiv(index: number): void {
-        this.arrItemFlex[index].width = 'auto';
+        this.arrItemFlex[index].width = '50%';
     }
-    changeOption3() {
+    changeOption3(): void {
         this.option4 = false;
         this.option3 = true;
         this.option1 = false;
         this.option2 = false;
     }
-    changeOption4() {
+    changeOption4(): void {
+        this.hideSumary.forEach((item, i) => {
+            this.hideSumary[i] = true;
+        });
+
         this.option4 = true;
         this.option3 = false;
         this.option1 = false;
         this.option2 = false;
-
+    }
+    sumary(i, option: boolean): void {
+        this.hideSumary[i] = option;
     }
 }
