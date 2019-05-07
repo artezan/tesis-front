@@ -1,7 +1,7 @@
-// const apiUrl = 'https://black-box-api.herokuapp.com/api/v1/';
-export const END_POINT_URL = 'http://localhost:3000/';
-
-const apiUrl = 'http://localhost:3000/api/v1/';
+const apiUrl = 'https://black-box-api.herokuapp.com/api/v1/';
+export const END_POINT_URL = 'https://black-box-api.herokuapp.com/';
+// export const END_POINT_URL = 'http://localhost:3000/';
+// const apiUrl = 'http://localhost:3000/api/v1/';
 const general = 'general/';
 const sumary = 'sumary/';
 const users = 'users/';

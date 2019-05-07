@@ -287,16 +287,22 @@ export class ListTablesComponent implements OnInit {
     private exelToJson(
         wb: XLSX.WorkBook
     ): Array<{ data: any[]; name: string }> {
+        // arreglo que va a tener el JSON
         const arrJson = [];
+        // Nombre de las columnas
         let columsNames: string[];
+        // Revisa cada hoja de excel
         wb.SheetNames.forEach(sheetName => {
+            // arreglo para los datos de las filas transformadas
             const arrRows = [];
+            // datos de las filas
             const dataRows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {
                 header: 1
             });
+            // recorre el arreglo de las filas
             dataRows.forEach((row: Array<any>, numRow) => {
                 const obj = {};
-                // caputa nombre de colums
+                // caputa nombre de columnas
                 if (numRow === 0) {
                     columsNames = row;
                 } else {
@@ -314,6 +320,7 @@ export class ListTablesComponent implements OnInit {
             });
             arrJson.push({ name: sheetName, data: arrRows });
         });
+        // regresa los datos en JSON y el nombre de la hoja
         return arrJson;
     }
 }

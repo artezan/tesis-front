@@ -41,6 +41,13 @@ export const navigation: FuseNavigation[] = [
                 url: '/save-chart'
             },
             {
+                id: 'tablero',
+                title: 'Tablero',
+                type: 'item',
+                icon: 'view_quilt',
+                url: '/tablero'
+            },
+            {
                 id: 'brain',
                 title: 'Neuronal',
                 type: 'item',

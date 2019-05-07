@@ -1,0 +1,430 @@
+<div id="tablero-analytics" class="page-layout blank grey-100-bg">
+    <ng-container *ngIf="showLoader; then loader; else charts"></ng-container>
+    <ng-template #loader>
+            <mat-spinner></mat-spinner>
+            <h1>Ir a Generar Graficas</h1>
+    </ng-template>
+    <ng-template #charts>
+        <!-- 
+    G1
+ -->
+ <div class="main-widget" *ngIf="showChart">
+        <div class="position-relative  pb-8 mat-blue-600-bg" >
+                <div class="position-relative p-24 mat-blue-600-bg"
+                fxLayout="row" fxLayoutAlign="space-between center">
+               <div fxLayout="column" fxLayoutAlign="start start">
+                   <span class="h2">{{chartTitle1.title1}}</span>
+                   <span class="h5 secondary-text">{{chartTitle1.title2}}</span>
+               </div>
+           </div> 
+        </div>
+           <div class="position-relative h-256 pb-16 mat-blue-600-bg " *ngIf="showChart">
+        <canvas baseChart  
+                [datasets]="chartData1"
+                [labels]="chartLabels1"
+                [colors]="chartColors1"
+                [options]="chartOptions1"
+                [chartType]="chartType1">
+        </canvas>
+        </div>
+       
+
+    </div>
+    <!-- /G1 -->
+
+    <!-- contenet -->
+    <!-- pegar aqui -->
+    <div class="content">
+    
+            <div class="left mr-lg-32">
+    
+                <div class="pb-24 font-size-18 font-weight-300">
+                    Datos en la Tabla
+                </div>
+    
+                <div fxLayout="column" fxLayoutAlign="start"
+                     fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+    
+                    <!-- Widget 2 g4 -->
+                    <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+                    <!-- show -->
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'" *ngIf="showChart4">
+                    
+                            <div class="p-16 pb-0" >
+                    
+                                <div fxLayout="row" fxLayoutAlign="end center">
+                                    <!-- botones -->
+                                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget4SelectedDay = 'top'; getOneChartData(4, true)"
+                                        [ngClass]="{'grey-300-bg': widget4SelectedDay === 'top'}">
+                                        Mayores
+                                    </div>
+                                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget4SelectedDay = 'bottom'; getOneChartData(4, false)"
+                                        [ngClass]="{'grey-300-bg': widget4SelectedDay === 'bottom'}">
+                                        Menores
+                                    </div>
+                                </div>
+                    
+                                <div class="pr-16">
+                                    <div class="h3 secondary-text">  {{chartLabels4[0]}}</div>
+                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                        {{chartData4[0].data[0]}}
+                                    </div>
+                                </div>
+                    
+                                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                    
+                                    <div class="ml-4 text-nowrap">{{chartTitle4.title2}}</div>
+                                </div>
+                    
+                            </div>
+    
+                            <div class=" w-100-p"   > 
+                                <canvas baseChart
+                                        [datasets]="chartData4"
+                                        [labels]="chartLabels4"
+                                        [colors]="chartColors4"
+                                        [options]="chartOptions4"
+                                        [chartType]="chartType4">
+                                </canvas>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                    <!-- / Widget 2 -->
+    
+                    <!-- Widget 3 g3 -->
+                    <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+    
+                            <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'" *ngIf="showChart3">
+        
+                                <div class="p-16 pb-0" >
+                                        
+                                       <div fxLayout="row" fxLayoutAlign="end center">
+                                           <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                                                (click)="widget3SelectedDay = 'top'; getOneChartData(3, true)"
+                                                [ngClass]="{'grey-300-bg': widget3SelectedDay === 'top'}">
+                                               Mayores
+                                           </div>
+                                           <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                                                (click)="widget3SelectedDay = 'bottom'; getOneChartData(3, false)"
+                                                [ngClass]="{'grey-300-bg': widget3SelectedDay === 'bottom'}">
+                                               Menores
+                                           </div>
+                                       </div>
+        
+                                    <div class="pr-16">
+                                        <div class="h3 secondary-text">  {{chartLabels3[0]}}</div>
+                                        <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                            {{chartData3[0].data[0]}}
+                                        </div>
+                                    </div>
+        
+                                    <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                       
+                                        <div class="ml-4 text-nowrap">{{chartTitle3.title2}}</div>
+                                    </div> 
+        
+                                </div>
+        
+                                <div class=" w-100-p"   > 
+                                    <canvas baseChart
+                                            [datasets]="chartData3"
+                                            [labels]="chartLabels3"
+                                            [colors]="chartColors3"
+                                            [options]="chartOptions3"
+                                            [chartType]="chartType3">
+                                    </canvas>
+                                </div>
+        
+                            </div>
+        
+                        </div>
+                    <!-- / Widget 3 -->
+    
+                    <!-- Widget 4 g5 -->
+                    <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+    
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'" *ngIf="showChart5">
+    
+                            <div class="p-16 pb-0">
+                                    <div fxLayout="row" fxLayoutAlign="end center">
+                                       <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                                            (click)="widget55SelectedDay = 'top'; getOneChartData(5, true)"
+                                            [ngClass]="{'grey-300-bg': widget55SelectedDay === 'top'}">
+                                           Mayores
+                                       </div>
+                                       <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                                            (click)="widget55SelectedDay = 'bottom'; getOneChartData(5, false)"
+                                            [ngClass]="{'grey-300-bg': widget55SelectedDay === 'bottom'}">
+                                           Menores
+                                       </div>
+                                   </div>
+    
+                                <div class="pr-16">
+                                    <div class="h3 secondary-text">{{chartLabels5[0]}}</div>
+                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                        {{chartData5[0].data[0]}}
+                                    </div>
+                                </div>
+    
+                                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                   
+                                    <div class="ml-4 text-nowrap"> {{chartTitle5.title2}}</div>
+                                </div> 
+    
+                            </div>
+    
+                            <div class=" w-100-p"   *ngIf="showChart5" > 
+                                <canvas baseChart
+                                        [datasets]="chartData5"
+                                        [labels]="chartLabels5"
+                                        [colors]="chartColors5"
+                                        [options]="chartOptions5"
+                                        [chartType]="chartType5">
+                                </canvas>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                    <!-- / Widget 4 -->
+                    <!-- G6 -->
+                 
+    
+                </div>
+    <!-- segunda fila -->
+    <div fxLayout="column" fxLayoutAlign="start"
+    fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start" >
+    
+       <!-- Widget 8 -->
+       <div  style=" width: 30%; max-width: 30%;" *ngIf="showChart6"  >
+
+            <div class="pb-24 font-size-18 font-weight-300">
+               Datos
+            </div>
+
+            <div class="fuse-card" style="max-width: 100% !important">
+
+                <div class="mat-light-blue-600-bg">
+
+                    <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="pr-16">
+                            <div class="h1 font-weight-300">Suma Total</div>
+                            <div class="h5 secondary-text">{{chartTitle6.title2}}</div>
+                        </div>
+                    </div>
+
+                    <div class="p-16 pt-8" fxLayout="row" fxLayoutAlign="space-between end">
+                        <div *ngIf="sc == 0 "  class="font-size-48 font-weight-300 line-height-1">{{totalTap0}}</div>
+                        <div *ngIf="sc == 1 " class="font-size-48 font-weight-300 line-height-1">{{totalTap1}} </div>
+                        
+                    </div>
+
+                </div>
+
+                <mat-tab-group backgroundColor="accent" (selectedIndexChange)="selectedTabChange($event)">
+                    <mat-tab label="Mayor">
+                        <div class="h-400 my-16">
+                                <canvas baseChart
+                                [datasets]="chartData6Sin"
+                                [labels]="chartLabels6"
+                                [colors]="chartColors6"
+                                [options]="chartOptions6"
+                                [chartType]="chartType6">
+                        </canvas>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Menor">
+                        <div class="h-400 my-16">
+                                <canvas baseChart
+                                [datasets]="chartData6Entregado"
+                                [labels]="chartLabels6Entregado"
+                                [colors]="chartColors6"
+                                [options]="chartOptions6"
+                                [chartType]="chartType6">
+                        </canvas>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </div>
+
+        </div>
+        <!-- /Widget 8 -->
+        <!--  coleeciones -->
+       <div style="margin-left: 3%; width: 70%; max-width: 70%;" *ngIf="showChart7" >
+        <div class="pb-24 font-size-18 font-weight-300">
+                {{chartTitle7.title1}}
+            </div>
+        <div class="fuse-card"  style="max-width: 100% !important"  >
+
+            <div class="position-relative p-24"
+                 fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <span *ngIf="widget7SelectedDay === 'top'"  class="h2">Top 10</span>
+                    <span *ngIf="widget7SelectedDay === 'bottom'"  class="h2">Menores 10</span>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                         (click)="widget7SelectedDay = 'top'; getOneChartData(7, true)"
+                         [ngClass]="{'grey-300-bg': widget7SelectedDay === 'top'}">
+                        Mayores
+                    </div>
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                         (click)="widget7SelectedDay = 'bottom'; getOneChartData(7, false)"
+                         [ngClass]="{'grey-300-bg': widget7SelectedDay === 'bottom'}">
+                        Menores
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative "   *ngIf="showChart7" >
+                <canvas baseChart
+                        [datasets]="chartData7"
+                        [labels]="chartLabels7"
+                        [colors]="chartColors7"
+                        [options]="chartOptions7"
+                        [chartType]="chartType7">
+                </canvas>
+            </div>
+            <!-- <table class="simple" style="margin-top: 3%">
+                <thead>
+                    <tr>
+                        <th >Mueble</th>
+                        <th class="text-right">Unidades Vendidas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let label of chartLabels2; index as i">
+                        <td  >{{label}}</td>
+                        <td class="text-right">{{chartData2[0].data[i]}}</td>
+                    </tr>
+                </tbody>
+            </table>  -->
+        
+        </div>
+    </div>
+        <!-- / coleeciones  -->
+    </div>
+    <!-- Principales -->
+    <div class="pt-48 pb-24 font-size-18 font-weight-300">
+          Datos
+        </div>
+    <div fxLayout="column" fxLayoutAlign="start"
+    fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+    <!-- Widget 5 g2 -->
+    
+
+    <div class="fuse-card auto-width" style="width: 50%; margin-right: 5%"  *ngIf="showChart2" >
+
+        <div class="position-relative p-24"
+             fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <span *ngIf="widget5SelectedDay === 'top'"  class="h2">Top 10 {{chartTitle2.title1}}</span>
+                <span *ngIf="widget5SelectedDay === 'bottom'"  class="h2">Menores 10 {{chartTitle2.title1}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                     (click)="widget5SelectedDay = 'top'; getOneChartData(2, true)"
+                     [ngClass]="{'grey-300-bg': widget5SelectedDay === 'top'}">
+                    Mayores
+                </div>
+                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                     (click)="widget5SelectedDay = 'bottom'; getOneChartData(2, false)"
+                     [ngClass]="{'grey-300-bg': widget5SelectedDay === 'bottom'}">
+                    Menores
+                </div>
+            </div>
+        </div>
+
+        <div class="position-relative "   *ngIf="showChart2" >
+            <canvas baseChart
+                    [datasets]="chartData2"
+                    [labels]="chartLabels2"
+                    [colors]="chartColors2"
+                    [options]="chartOptions2"
+                    [chartType]="chartType2">
+            </canvas>
+        </div>
+        <table class="simple " style="margin-top: 3%">
+            <thead>
+                <tr>
+                    <th >{{chartTitle2.title1}}</th>
+                    <th class="text-right">{{chartTitle2.title2}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let label of chartLabels2; index as i" >
+                    <td  >{{label}}</td>
+                    <td class="text-right">{{chartData2[0].data[i]}}</td>
+                </tr>
+            </tbody>
+        </table> 
+
+    </div>
+    <!-- / Widget 5 -->
+      <!-- Cliente Final -->
+
+        <div class="fuse-card auto-width" style="width: 50%"  *ngIf="showChart8" >
+
+            <div class="position-relative p-24"
+                 fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <span *ngIf="widget8SelectedDay === 'top'"  class="h2">Top 10 {{chartTitle8.title1}}</span>
+                    <span *ngIf="widget8SelectedDay === 'bottom'"  class="h2">Menores 10 {{chartTitle8.title1}}</span>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                         (click)="widget8SelectedDay = 'top'; getOneChartData(8, true)"
+                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'top'}">
+                        Mayores
+                    </div>
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                         (click)="widget8SelectedDay = 'bottom'; getOneChartData(8, false)"
+                         [ngClass]="{'grey-300-bg': widget8SelectedDay === 'bottom'}">
+                        Menores
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative "   *ngIf="showChart8" >
+                <canvas baseChart
+                        [datasets]="chartData8"
+                        [labels]="chartLabels8"
+                        [colors]="chartColors8"
+                        [options]="chartOptions8"
+                        [chartType]="chartType8">
+                </canvas>
+            </div>
+            <table class="simple " style="margin-top: 3%">
+                <thead>
+                    <tr>
+                        <th >{{chartTitle8.title1}}</th>
+                        <th class="text-right">{{chartTitle8.title2}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let label of chartLabels8; index as i" >
+                        <td  >{{label}}</td>
+                        <td class="text-right">{{chartData8[0].data[i]}}</td>
+                    </tr>
+                </tbody>
+            </table> 
+
+        </div>
+        <!-- / final -->
+    </div>
+            </div>
+    
+            
+    </div>
+    <!-- // contenet -->
+        
+    </ng-template>
+    
+
+    
+    </div>
+    

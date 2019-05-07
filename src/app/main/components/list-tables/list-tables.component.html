@@ -40,10 +40,10 @@
         </ng-template>
         <ng-template #table>
             <div class="content mat-white-bg" fusePerfectScrollbar>
-                <mat-table [dataSource]="dataSource " [@animateStagger]="{value:'50'}">
+                <mat-table [dataSource]="dataSource " [@animateStagger]="{value:'50'}" >
 
                     <!-- Type Column -->
-                    <ng-container cdkColumnDef="icon">
+                    <ng-container cdkColumnDef="icon" class="table-border">
                         <mat-header-cell *cdkHeaderCellDef fxFlex="64px"></mat-header-cell>
                         <mat-cell *cdkCellDef="let row" fxFlex="64px">
                             <mat-icon class="type-icon" [ngClass]="{'spreadsheet': !row.type || row.type !== 'docx', 'document': row.type === 'docx'}"></mat-icon>
@@ -92,7 +92,7 @@
 
 
                     <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *cdkRowDef="let row; columns: displayedColumns;" [@animate]="{value:'*',params:{y:'100%'}}">
+                    <mat-row class="table-border" *cdkRowDef="let row; columns: displayedColumns;" [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>
 
                 </mat-table>

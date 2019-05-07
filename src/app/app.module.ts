@@ -19,7 +19,9 @@ import {
     MatCardModule,
     MatSelectModule,
     MatDividerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatMenuModule,
+    MatTabsModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
@@ -56,6 +58,7 @@ import { NgxDatatableModule } from 'cesar-table-artezan';
 import { BrainPredictionComponent } from './main/components/brain-prediction/brain-prediction.component';
 import { DocxDataComponent } from './main/components/docx-data/docx-data.component';
 import { ApiInterceptor } from '_config/api-interceptor';
+import { TableroComponent } from './main/components/tablero/tablero.component';
 
 
 const appRoutes: Routes = [
@@ -69,6 +72,7 @@ const appRoutes: Routes = [
     { path: 'maps', component: MapsComponent },
     { path: 'table-data', component: TableDataComponent },
     { path: 'docx-data', component: DocxDataComponent },
+    { path: 'tablero', component: TableroComponent },
     {
         path: 'apps',
         loadChildren: './main/apps/apps.module#AppsModule'
@@ -100,7 +104,8 @@ const appRoutes: Routes = [
         ModalDetailComponent,
         TableDataComponent,
         BrainPredictionComponent,
-        DocxDataComponent
+        DocxDataComponent,
+        TableroComponent
         
     ],
     imports: [
@@ -141,6 +146,8 @@ const appRoutes: Routes = [
         MatSelectModule,
         MatDividerModule,
         MatToolbarModule,
+        MatMenuModule,
+        MatTabsModule,
 
         // App modules
         LayoutModule,
